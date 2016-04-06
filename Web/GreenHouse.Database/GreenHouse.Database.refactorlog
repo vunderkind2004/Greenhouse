@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="0fa22fc2-9e8e-4bdc-9267-0be7055382e0" ChangeDateTime="04/02/2016 22:07:44">
+    <Property Name="ElementName" Value="[dbo].[SensorData].[EventDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SensorData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EventTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fcbb5d26-4dfe-43e2-a901-159d3a1b7711" ChangeDateTime="04/02/2016 22:07:54">
+    <Property Name="ElementName" Value="[dbo].[SensorData].[EventTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SensorData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EventDateTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="97ab1927-5a9a-42e9-be70-c3d7dbc69e42" ChangeDateTime="04/02/2016 22:11:32">
+    <Property Name="ElementName" Value="[dbo].[SensorData].[BitValue]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SensorData]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Value" />
+  </Operation>
+</Operations>

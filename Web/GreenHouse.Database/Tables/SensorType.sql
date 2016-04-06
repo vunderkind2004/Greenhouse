@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[SensorType]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+    [TypeName] NVARCHAR(50) NOT NULL, 
+    [Dimension] NVARCHAR(50) NOT NULL
+)
