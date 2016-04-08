@@ -1,0 +1,12 @@
+/Web/GreenHouse.Interfaces/obj/Debug
+/Web/GreenHouse.Repository/obj/Debug
+/Web/GreenHouse/obj/Debug
+/Web/GreenHouse.Database/bin/Debug
+/Web/GreenHouse.Database/obj/Debug
+/Web/GreenHouse.Interfaces/bin/Debug
+/Web/GreenHouse.Repository/bin/Debug
+/Web/GreenHouse/bin
+/Web/packages/Microsoft.AspNet.Mvc.5.2.3/lib/net45/*.dll
+/Web/packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/net45/*.dll
+/Web/packages
+/Web/*.suo

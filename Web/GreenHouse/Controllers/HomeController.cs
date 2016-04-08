@@ -33,5 +33,11 @@ namespace GreenHouse.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult RegisterDevice()
+        {
+            return View();
+        }
+
     }
 }
