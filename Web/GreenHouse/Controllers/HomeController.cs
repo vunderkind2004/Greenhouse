@@ -85,9 +85,9 @@ namespace GreenHouse.Controllers
             return View(sensorTypes);
         }
 
-        public ActionResult GetSensorData()
+        public ActionResult GetSensorData(int skipCount=0, int takeCount=100)
         {
-            var data = dataReposytory.GetData().OrderByDescending(x => x.EventDateTime);
+            var data = dataReposytory.GetData(skipCount,takeCount);
             var model = data.Select(x => new SensorDataViewModel
             {
                 DeviceName = x.DeviceName,

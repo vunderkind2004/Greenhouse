@@ -43,12 +43,15 @@ namespace GreenHouse.Repository.Repository
             }
         }
 
-        public IEnumerable<SensorDataResponse> GetData()
+        public IEnumerable<SensorDataResponse> GetData(int skipCount, int takeCount)
         {
             var factory = GetFactory();
             using (var db = factory.Open())
             {
-                var allData = db.LoadSelect<SensorData>();
+                var allData = db.LoadSelect<SensorData>()
+                    .OrderByDescending(x=>x.EventDateTime)
+                    .Skip(skipCount)
+                    .Take(takeCount);
                 var response = allData.Select(x => new SensorDataResponse 
                 {
                     EventDateTime = x.EventDateTime,
