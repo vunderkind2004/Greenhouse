@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using GreenHouse.App_Start;
+using Microsoft.Practices.Unity;
+using Unity.WebApi;
 
 namespace GreenHouse
 {
@@ -16,6 +19,10 @@ namespace GreenHouse
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var container = UnityConfig.GetConfiguredContainer();
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+
         }
     }
 }

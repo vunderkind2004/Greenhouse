@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <ul>
+            <li>
+                @Html.ActionLink("Devices","GetDevices","Home")
+            </li>
+            <li>
+                @Html.ActionLink("Registre device","RegisterDevice","Home")
+            </li>
+            <li>
+                @Html.ActionLink("Sensor types","GetSensorTypes","Home")
+            </li>
+            <li>
+                @Html.ActionLink("Add sensor type","AddSensorType","Home")
+            </li>
+            <li>
+                @Html.ActionLink("View data","GetSensorData","Home")
+            </li>
+        </ul>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

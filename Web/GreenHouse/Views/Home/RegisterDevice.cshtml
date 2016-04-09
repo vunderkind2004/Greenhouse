@@ -1,9 +1,13 @@
-﻿@{
+﻿@model GreenHouse.ViewModels.DeviceViewModel
+@{
     ViewBag.Title = "RegisterDevice";
+    Layout = "~/Views/_Layout.cshtml";
 }
 
 <h2>RegisterDevice</h2>
 
-@using(Html.BeginForm())
+@using(Html.BeginForm("RegisterDevice","Home",FormMethod.Post))
 {
+    @Html.EditorForModel()
+    <input type="submit" value="save" />
 }

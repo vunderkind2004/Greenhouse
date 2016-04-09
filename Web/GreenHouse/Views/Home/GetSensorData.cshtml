@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GreenHouse.ViewModels.SensorDataViewModel>
+
+@{
+    ViewBag.Title = "Sensor Data";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Sensor Data</h2>
+
+@if(Model.Any())
+{
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Device</th>
+            @*<th>DeviceID</th>*@
+            <th>Sensor type</th>
+            <th>Value</th>
+            <th>Dimension</th>
+        </tr>
+    
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@item.EventDateTime.ToString()</td>
+            <td>@item.DeviceName</td>
+            @*<td>@item.DeviceId</td>*@
+            <td>@item.SensorType</td>
+            <td>@item.Value</td>
+            <td>@item.SensorDimension</td>
+        </tr>
+    
+        }
+    </table>
+}

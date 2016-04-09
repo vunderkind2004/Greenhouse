@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ServiceStack.DataAnnotations;
 
 namespace GreenHouse.Repository.DataModel
 {
@@ -11,7 +12,14 @@ namespace GreenHouse.Repository.DataModel
         public DateTime EventDateTime { get; set; }
         public float Value { get; set; }
 
-        public virtual SensorType SensorType { get; set; }
-        public virtual Device Device { get; set; }
+        [References(typeof(SensorType))]
+        public int SensorTypeId { get; set; }
+        [Reference]
+        public SensorType SensorType { get; set; }
+
+        [References(typeof(Device))]
+        public int DeviceId { get; set; }
+        [Reference]
+        public Device Device { get; set; }
     }
 }

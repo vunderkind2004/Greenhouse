@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GreenHouse.ViewModels.DeviceViewModel>
+
+@{
+    ViewBag.Title = "GetDevices";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Devices</h2>
+
+@if(Model.Any())
+{
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Summary</th>
+        </tr>
+    
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Summary</td>
+        </tr>
+    
+        }
+    </table>
+}

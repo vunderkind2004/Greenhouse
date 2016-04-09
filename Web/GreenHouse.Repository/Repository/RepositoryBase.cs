@@ -10,7 +10,7 @@ namespace GreenHouse.Repository.Repository
 {
     public class RepositoryBase<T> : IRepository<T>
     {
-        private string connectionString;
+        private readonly string connectionString;
 
         public RepositoryBase(string connectionString)
         {

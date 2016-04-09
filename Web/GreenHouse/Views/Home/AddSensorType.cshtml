@@ -1,0 +1,14 @@
+﻿@model GreenHouse.ViewModels.SensorTypeViewModel
+
+@{
+    ViewBag.Title = "AddSensorType";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>AddSensorType</h2>
+
+@using(Html.BeginForm("AddSensorType","Home",FormMethod.Post))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="save" />
+}

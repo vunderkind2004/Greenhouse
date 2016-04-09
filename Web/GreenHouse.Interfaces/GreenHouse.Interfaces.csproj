@@ -40,8 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiModels\HumidityData.cs" />
+    <Compile Include="ApiModels\SensorDataMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\ISensorDataRepository.cs" />
+    <Compile Include="Responses\SensorDataResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

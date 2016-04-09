@@ -64,7 +64,10 @@
     <Compile Include="DataModel\SensorType.cs" />
     <Compile Include="DataModel\SensorData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DeviceNotFoundException.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\SensorDataRepository.cs" />
+    <Compile Include="Repository\SensorTypeNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GreenHouse.Interfaces\GreenHouse.Interfaces.csproj">

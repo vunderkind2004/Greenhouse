@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GreenHouse.ViewModels.SensorTypeViewModel>
+
+@{
+    ViewBag.Title = "Sensor types";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Sensor types</h2>
+
+@if(Model.Any())
+{
+    <table>
+        <tr>
+            <th>TypeName</th>
+            <th>Dimension</th>
+        </tr>
+    
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>@item.TypeName</td>
+            <td>@item.Dimension</td>
+        </tr>
+    
+        }
+    </table>
+}
