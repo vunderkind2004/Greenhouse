@@ -10,3 +10,4 @@
 /Web/packages/Microsoft.AspNet.WebApi.Client.5.2.3/lib/net45/*.dll
 /Web/packages
 /Web/*.suo
+/Web/GreenHouse.Database/*.dbmdl
