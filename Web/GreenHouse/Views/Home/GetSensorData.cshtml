@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<GreenHouse.ViewModels.SensorDataViewModel>
 
 @{
-    ViewBag.Title = "Sensor Data";
+    ViewBag.Title = "Sensor data";
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<h2>Sensor Data</h2>
+<h2>Sensor data</h2>
 
 @if(Model.Any())
 {
-    <table>
+    <table class="table table-hover">
         <tr>
             <th>Date</th>
             <th>Device</th>

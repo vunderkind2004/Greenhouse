@@ -1,0 +1,10 @@
+﻿@model GreenHouse.ViewModels.NavLinkViewModel
+
+@{
+    var url = Url.Action(Model.Action, Model.Controller);
+    var isActive = Model.RequestUrlPath.ToLower() == url.ToLower();
+}
+
+<li class="@(isActive?"active":"")">
+    @Html.ActionLink(Model.Name,Model.Action,Model.Controller)
+</li>
