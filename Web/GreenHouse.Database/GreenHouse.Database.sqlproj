@@ -59,6 +59,7 @@
     <Build Include="Tables\SensorType.sql" />
     <Build Include="Tables\Device.sql" />
     <Build Include="Tables\SensorData.sql" />
+    <Build Include="Tables\User.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="GreenHouse.Database.refactorlog" />

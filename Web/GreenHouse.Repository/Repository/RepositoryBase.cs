@@ -62,5 +62,18 @@ namespace GreenHouse.Repository.Repository
         {
             return new OrmLiteConnectionFactory( connectionString,SqlServerDialect.Provider);
         }
+
+
+
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            var factory = GetFactory();
+            using (var db = factory.Open())
+            {
+                var result = await db.SelectAsync<T>();
+                return result;
+            }
+        }
+
     }
 }

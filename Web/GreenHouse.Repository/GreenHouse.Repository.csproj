@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\BaseModel.cs" />
+    <Compile Include="DataModel\User.cs" />
     <Compile Include="DataModel\Device.cs" />
     <Compile Include="DataModel\SensorType.cs" />
     <Compile Include="DataModel\SensorData.cs" />

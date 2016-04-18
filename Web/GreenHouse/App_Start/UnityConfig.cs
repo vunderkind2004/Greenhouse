@@ -45,8 +45,7 @@ namespace GreenHouse.App_Start
             container.RegisterType<IRepository<Device>, RepositoryBase<Device>>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<SensorData>, RepositoryBase<SensorData>>(new InjectionConstructor(connectionString));
             container.RegisterType<ISensorDataRepository, SensorDataRepository>(new InjectionConstructor(connectionString));
-
-            
+            container.RegisterType<IRepository<User>, RepositoryBase<User>>(new InjectionConstructor(connectionString));            
         }
     }
 }

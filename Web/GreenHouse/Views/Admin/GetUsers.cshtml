@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GreenHouse.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "Admin. Users.";
+    Layout = "~/Views/_Layout.cshtml";
+    var i = 0;
+}
+
+
+@if(Model.Any())
+{
+    <table class="table table-hover">
+        <tr>
+            <th>#</th>
+            <th>Id</th>
+            <th>Registration</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Action</th>            
+        </tr>
+    
+       
+        @foreach(var item in Model)
+        {
+            i++;
+        <tr>
+            <td>@i</td>
+            <td>[@item.Id]</td>
+            <td>@item.RegistrationDate.ToShortDateString() @item.RegistrationDate.ToShortTimeString()</td>
+            <td>@item.FirstName</td>
+            <td>@item.LastName</td>
+            <td>@item.Login</td>
+            <td>@item.Email</td>
+            <td>@item.Phone</td>
+            <td>@Html.ActionLink("Edit", "EditUser", new {id = item.Id })</td>
+        </tr>
+    
+        }
+    </table>
+}
