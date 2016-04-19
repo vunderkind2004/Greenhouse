@@ -10,6 +10,7 @@ using GreenHouse.ViewModels;
 
 namespace GreenHouse.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IRepository<SensorType> sensorRepository;

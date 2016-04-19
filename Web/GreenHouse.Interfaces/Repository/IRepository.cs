@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace GreenHouse.Interfaces.Repository
     {
         IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicte);
         void Create<T>(T entity);
         void Update<T>(T entity);
         void Delete<T>(T entity);

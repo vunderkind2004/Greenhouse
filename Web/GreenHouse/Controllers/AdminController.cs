@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,9 +13,10 @@ using GreenHouse.ViewModels;
 
 namespace GreenHouse.Controllers
 {
+    [Authorize]    
     public class AdminController : Controller
     {
-        private readonly IRepository<User> userRepository;
+        private readonly IRepository<User> userRepository;        
 
         public AdminController(IRepository<User> userRepository)
         {
@@ -22,7 +24,7 @@ namespace GreenHouse.Controllers
         }
 
         public ActionResult Index()
-        {
+        {            
             return View();
         }
 
@@ -45,13 +47,13 @@ namespace GreenHouse.Controllers
         }
 
         public ActionResult AddUser()
-        {
+        {           
             return View("EditUser",new UserViewModel());
         }
 
         [HttpGet]
         public ActionResult EditUser(int id)
-        {
+        {           
             var user = userRepository.GetAll().FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
@@ -73,7 +75,7 @@ namespace GreenHouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUser(UserViewModel model)
+        public async Task<ActionResult> AddUser(UserViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +87,11 @@ namespace GreenHouse.Controllers
                 ModelState.AddModelError("Password","Password is required.");
                 return View("EditUser",model);
             }
-
+            if (await IsUserExist(model.Login))
+            {
+                ModelState.AddModelError("Login", "This login is used");
+                return View("EditUser", model);
+            }
             var user = new User
                 {
                     FirstName = model.FirstName, 
@@ -105,8 +111,9 @@ namespace GreenHouse.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditUser(UserViewModel model)
+        public async Task<ActionResult> EditUser(UserViewModel model)
         {
+            
             if(model == null || model.Id<=0)
             {
                 Response.StatusCode = 400;
@@ -120,10 +127,18 @@ namespace GreenHouse.Controllers
                 return Content("User not found");
             }
 
+            var userWithThisLogin = await userRepository.GetAsync(x => x.Login == model.Login && x.Id != user.Id);
+            if (userWithThisLogin.Any())
+            {
+                ModelState.AddModelError("Login", "This login is used");
+                return View("EditUser", model);
+            }
+
             if (!string.IsNullOrEmpty(model.Password))
             {
                 user.PasswordHash = HashHelper.GetMd5Hash(model.Password);
             }
+
 
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
@@ -137,5 +152,12 @@ namespace GreenHouse.Controllers
             return View(model);
         }
 
+        private async Task<bool> IsUserExist(string login)
+        {
+            var users = await userRepository.GetAsync(x=>x.Login == login);
+            return users.Any();
+        }
+
+        
     }
 }

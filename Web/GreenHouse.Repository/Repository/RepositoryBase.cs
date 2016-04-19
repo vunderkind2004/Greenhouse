@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using GreenHouse.Interfaces.Repository;
@@ -25,6 +26,25 @@ namespace GreenHouse.Repository.Repository
             using (var db = factory.Open())
             {
                 var result = db.Select<T>();
+                return result;
+            }
+        }
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            var factory = GetFactory();
+            using (var db = factory.Open())
+            {
+                var result = await db.SelectAsync<T>();
+                return result;
+            }
+        }
+
+        public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicte)
+        {
+            var factory = GetFactory();
+            using (var db = factory.Open())
+            {
+                var result = await db.SelectAsync<T>(predicte);
                 return result;
             }
         }
@@ -65,15 +85,7 @@ namespace GreenHouse.Repository.Repository
 
 
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            var factory = GetFactory();
-            using (var db = factory.Open())
-            {
-                var result = await db.SelectAsync<T>();
-                return result;
-            }
-        }
+        
 
     }
 }
