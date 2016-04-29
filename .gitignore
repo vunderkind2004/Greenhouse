@@ -11,3 +11,11 @@
 /Web/packages
 /Web/*.suo
 /Web/GreenHouse.Database/*.dbmdl
+/GreenHouseMicro/*.suo
+/GreenHouseMicro/TcpListener/bin/Release
+/GreenHouseMicro/TcpListener/obj/Release
+/GreenHouseMicro/MicroWebServer/Release
+/GreenHouseMicro/GreenHouseMicro/Release
+/GreenHouseMicro/StaticIp/Release
+/GreenHouseMicro/TestWebClient/Release
+/GreenHouseMicro/WiFiTest/Release
