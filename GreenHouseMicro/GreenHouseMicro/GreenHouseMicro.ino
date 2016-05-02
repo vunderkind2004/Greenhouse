@@ -1,8 +1,11 @@
 
 
 
+#include <DHT.h>
+#include "SensorData.h"
 #include <EtherCard.h>
 #include <TimeLib.h>
+
 uint32_t timer;
 uint32_t timerInterval;
 
@@ -26,9 +29,20 @@ static byte myip[] = { 192,168,1,108 };
 static byte gwip[] = { 192,168,1,1 };
 #endif
 
+// --- sonsor ---
+#define DHTPIN 2     // к какому пину будет подключен вывод Data
+//выбор используемого датчика
+//#define DHTTYPE DHT11   // DHT 11 
+#define DHTTYPE DHT22   // DHT 22  (AM2302)
+//#define DHTTYPE DHT21   // DHT 21 (AM2301)
+
+//инициализация датчика
+DHT dht(DHTPIN, DHTTYPE);
+
 void setup(){
 	Serial.begin(57600);
-	timerInterval = 5000 * 5;
+	timerInterval = 5000;
+	dht.begin();
 	if (ether.begin(sizeof Ethernet::buffer, mymac,53) == 0) 
 		Serial.println( "Failed to access Ethernet controller");
 	#if STATIC
@@ -53,10 +67,15 @@ void loop(){
 	  else
 	  {
 
-		  DisplayDigitalClock();
+		  //DisplayDigitalClock();
+		  PrintDateTime();
+		  Serial.print(" ");
 	  }
+	  SensorDataClass sensorData = GetSensorData();	  
 	}
 }
+
+//------------ Time ------------------------------------------------------
 
 void SetTime()
 {
@@ -162,6 +181,7 @@ static void SetTimeFromString(char *dateTimeArr)
 
 void DisplayDigitalClock() {
   // digital clock display of the time
+
   Serial.print(hour());
   printDigits(minute());
   printDigits(second());
@@ -170,10 +190,11 @@ void DisplayDigitalClock() {
   Serial.print(" ");
   Serial.print(day());
   Serial.print(" ");
-  Serial.print(monthShortStr(month()));
+  Serial.print(monthStr(month()));
   Serial.print(" ");
   Serial.print(year()); 
   Serial.println(); 
+  //PrintDateTime();
 }
 
 void printDigits(int digits) {
@@ -184,3 +205,51 @@ void printDigits(int digits) {
   Serial.print(digits);
 }
 
+void PrintDateTime()
+{
+	//yyyy.mm.dd
+    //hh:mm:ss
+	char date[11];
+	char time[9];
+	SetDateString(date);
+	SetTimeString(time);
+	Serial.print(date);
+	Serial.print(" ");
+	Serial.print(time);
+}
+
+void SetDateString(char *date)
+{
+	//yyyy.mm.dd
+	sprintf(date,"%4d.%02d.%02d",year(),month(),day());
+}
+
+void SetTimeString(char *time)
+{
+	 //hh:mm:ss
+	sprintf(time,"%02d:%02d:%02d",hour(),minute(),second());
+}
+
+//----------------- Sensors ---------------------------------------------
+SensorDataClass GetSensorData()
+{	
+	float h = dht.readHumidity();
+    float t = dht.readTemperature();
+
+	SensorDataClass data = SensorDataClass();
+	data.HumidityIn = h;
+	data.TemperatureIn = t;
+
+  // проверяем правильные ли данные получили
+  if (isnan(t) || isnan(h)) {
+    Serial.println("Error reading from DHT");	
+  } else {
+    Serial.print("H: "); 
+    Serial.print(h);
+    Serial.print("%  ");
+    Serial.print("T: "); 
+    Serial.print(t);
+    Serial.println("*C");
+  }
+  return data;
+}

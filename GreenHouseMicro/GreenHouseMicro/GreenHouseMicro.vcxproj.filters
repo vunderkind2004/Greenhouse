@@ -21,12 +21,12 @@
     <ClInclude Include="__vm\.GreenHouseMicro.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Clock.h">
+    <ClInclude Include="SensorData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp">
+    <ClCompile Include="SensorData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
