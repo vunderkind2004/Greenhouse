@@ -5,11 +5,16 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
+<div class="h3">
+    @Html.ActionLink("Register new device","RegisterDevice","Home",null, new {@class="btn btn-primary"})
+</div>
+
 @if(Model.Any())
 {
     <table class="table table-hover">
         <tr>
             <th>Name</th>
+            <th>Token</th>
             <th>Summary</th>
         </tr>
     
@@ -17,9 +22,14 @@
         {
         <tr>
             <td>@item.Name</td>
+            <td>@item.Token</td>
             <td>@item.Summary</td>
         </tr>
     
         }
     </table>
+}
+else
+{
+    <div>No devices</div>
 }

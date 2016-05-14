@@ -7,6 +7,7 @@ namespace GreenHouse.ViewModels
 {
     public class SensorTypeViewModel
     {
+        public int TypeId { get; set; }
         public string TypeName { get; set; }
         public string Dimension { get; set; }
     }

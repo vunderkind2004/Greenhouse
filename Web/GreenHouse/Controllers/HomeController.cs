@@ -16,13 +16,15 @@ namespace GreenHouse.Controllers
         private readonly IRepository<SensorType> sensorRepository;
         private readonly IRepository<Device> deviceRepository;
         private readonly ISensorDataRepository dataReposytory;
+        private readonly IRepository<User> userRepository;
 
         public HomeController(IRepository<SensorType> sensorRepository, IRepository<Device> deviceRepository,
-            ISensorDataRepository dataReposytory)
+            ISensorDataRepository dataReposytory, IRepository<User> userRepository)
         {
             this.sensorRepository = sensorRepository;
             this.deviceRepository = deviceRepository;
             this.dataReposytory = dataReposytory;
+            this.userRepository = userRepository;
         }
         //
         // GET: /Home/
@@ -65,7 +67,8 @@ namespace GreenHouse.Controllers
                 Name = model.Name,
                 Summary = model.Summary,
                 RegistrationDate = DateTime.Now,
-                Token = Guid.NewGuid().ToString()
+                Token = Guid.NewGuid().ToString(),
+                UserId = GetUserId()
             };
 
             deviceRepository.Create(device);
@@ -76,13 +79,14 @@ namespace GreenHouse.Controllers
 
         public ActionResult GetDevices()
         {
-            var devices = deviceRepository.GetAll().Select(x=>new DeviceViewModel{Name = x.Name, Summary = x.Summary});
+            var userId = GetUserId();
+            var devices = deviceRepository.GetAll().Where(x=>x.UserId==userId).Select(x=>new DeviceViewModel{Name = x.Name, Summary = x.Summary, Token = x.Token});
             return View(devices);
         }
 
         public ActionResult GetSensorTypes()
         {
-            var sensorTypes = sensorRepository.GetAll().Select(x=>new SensorTypeViewModel{TypeName=x.TypeName, Dimension= x.Dimension});
+            var sensorTypes = sensorRepository.GetAll().Select(x=>new SensorTypeViewModel{TypeName=x.TypeName, Dimension= x.Dimension, TypeId =  x.Id});
             return View(sensorTypes);
         }
 
@@ -98,6 +102,13 @@ namespace GreenHouse.Controllers
                 SensorDimension = x.Dimension
             }).ToList();
             return View(model);
+        }
+
+        private int GetUserId()
+        {
+            var login = User.Identity.Name;
+            var user = userRepository.GetAll().Where(x => x.Login == login).First();
+            return user.Id;
         }
 
     }

@@ -5,21 +5,31 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
+<div class="h3">
+    @Html.ActionLink("Add new sensor type","AddSensorType","Home",null, new {@class="btn btn-primary"})
+</div>
+
 @if(Model.Any())
 {
     <table class="table table-hover">
         <tr>
-            <th>TypeName</th>
+            <th>Type Id</th>
+            <th>Type Name</th>
             <th>Dimension</th>
         </tr>
     
         @foreach(var item in Model)
         {
         <tr>
+            <td>@item.TypeId</td>
             <td>@item.TypeName</td>
             <td>@item.Dimension</td>
         </tr>
     
         }
     </table>
+}
+else
+{
+    <div>No sensor types</div>
 }

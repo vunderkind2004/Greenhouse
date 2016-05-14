@@ -11,5 +11,6 @@ namespace GreenHouse.ViewModels
         [Required]
         public string Name { get; set; }
         public string Summary { get; set; }
+        public string Token { get; set; }
     }
 }
