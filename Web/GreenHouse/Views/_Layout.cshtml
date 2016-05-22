@@ -20,7 +20,7 @@
         <ul class="nav nav-tabs nav-justified">            
             @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Home", Action="Index", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
             @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Devices", Action="GetDevices", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
-            @*@Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Register device", Action="RegisterDevice", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})*@
+            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Sensors", Action="GetSensors", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
             @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Sensor types", Action="GetSensorTypes", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
             @*@Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Add sensor type", Action="AddSensorType", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})*@
             @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="View data", Action="GetSensorData", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})            

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GreenHouse.ViewModels.SensorViewModel>
+
+@{
+    ViewBag.Title = "Get sensors";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div class="h3">
+    @Html.ActionLink("Add sensor","AddSensor","Home",null, new {@class="btn btn-primary"})
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <table class ="table table-hover">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Type id</th>                
+                <th>Location</th>
+                <th>Device name</th>
+            </tr>
+        
+        @foreach (var item in Model)
+        { 
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.TypeId</td>                
+                <td>@item.Location</td>
+                <td>@item.DeviceName</td>
+            </tr>
+        }
+    </table>
+}
+else 
+{
+    <div>No itmes</div> 
+}

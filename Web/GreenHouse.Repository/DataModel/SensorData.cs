@@ -12,14 +12,10 @@ namespace GreenHouse.Repository.DataModel
         public DateTime EventDateTime { get; set; }
         public float Value { get; set; }
 
-        [References(typeof(SensorType))]
-        public int SensorTypeId { get; set; }
+        [References(typeof(Sensor))]
+        public int SensorId { get; set; }
         [Reference]
-        public SensorType SensorType { get; set; }
-
-        [References(typeof(Device))]
-        public int DeviceId { get; set; }
-        [Reference]
-        public Device Device { get; set; }
+        public Sensor Sensor { get; set; }
+        
     }
 }

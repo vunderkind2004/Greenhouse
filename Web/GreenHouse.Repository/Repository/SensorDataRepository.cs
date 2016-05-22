@@ -7,6 +7,7 @@ using GreenHouse.Interfaces.ApiModels;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Interfaces.Responses;
 using GreenHouse.Repository.DataModel;
+using GreenHouse.Repository.Exceptions;
 using ServiceStack.OrmLite;
 
 namespace GreenHouse.Repository.Repository
@@ -29,14 +30,14 @@ namespace GreenHouse.Repository.Repository
                 var device = db.Single<Device>(x => x.Token == message.Token);
                 if (device == null)
                     throw new DeviceNotFoundException();
-                var sensor = db.Single<SensorType>(x => x.Id == message.SensorType);
+                var sensor = db.Single<Sensor>(x => x.Id == message.SensorId);
                 if (sensor == null)
-                    throw new SensorTypeNotFoundException();
-                var data = new SensorData
+                    throw new SensorNotFoundException();
+                var data = new GreenHouse.Repository.DataModel.SensorData
                 {
-                    DeviceId = device.Id,
+                    //DeviceId = device.Id,
                     EventDateTime = DateTime.Now,
-                    SensorTypeId = sensor.Id,
+                    SensorId = sensor.Id,
                     Value = message.Value
                 };
                 db.Insert(data);
@@ -48,17 +49,22 @@ namespace GreenHouse.Repository.Repository
             var factory = GetFactory();
             using (var db = factory.Open())
             {
-                var allData = db.LoadSelect<SensorData>()
+                var allData = db.LoadSelect<GreenHouse.Repository.DataModel.SensorData>()
                     .OrderByDescending(x=>x.EventDateTime)
                     .Skip(skipCount)
                     .Take(takeCount);
+
+                var devices = db.Select<Device>(x => allData.Select(d => d.Sensor.DeviceId).Contains(x.Id));
+
+                var sensorTypes = db.Select<SensorType>(x => allData.Select(st => st.Sensor.SensorTypeId).Contains(x.Id));
+                
                 var response = allData.Select(x => new SensorDataResponse 
                 {
                     EventDateTime = x.EventDateTime,
-                    DeviceName = x.Device.Name,
-                    TypeName = x.SensorType.TypeName,
+                    DeviceName = devices.First(d=>d.Id == x.Sensor.DeviceId).Name,
+                    TypeName = sensorTypes.First(sType => sType.Id == x.Sensor.SensorTypeId).TypeName,
                     Value = x.Value,
-                    Dimension = x.SensorType.Dimension
+                    Dimension = sensorTypes.First(sType => sType.Id == x.Sensor.SensorTypeId).Dimension,
                 });
                 return response;
             }

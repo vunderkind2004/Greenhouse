@@ -15,13 +15,13 @@ namespace GreenHouse.Api
     {
         private readonly IRepository<SensorType> sensorRepository;
         private readonly IRepository<Device> deviceRepository;
-        private readonly ISensorDataRepository dataReposytory;
+        private readonly ISensorDataRepository dataRepository;
         public SensorController(IRepository<SensorType> sensorRepository, IRepository<Device> deviceRepository,
-            ISensorDataRepository dataReposytory)
+            ISensorDataRepository dataRepository)
         {
             this.sensorRepository = sensorRepository;
             this.deviceRepository = deviceRepository;
-            this.dataReposytory = dataReposytory;
+            this.dataRepository = dataRepository;
         }
 
         [HttpGet]
@@ -45,23 +45,9 @@ namespace GreenHouse.Api
         {
             if (message == null)
                 return BadRequest();
-            //var device = deviceRepository.GetAll().FirstOrDefault(x => x.Token == message.Token);
-            //if (device == null)
-            //    return BadRequest("wrong device token");
-            //var sensor = sensorRepository.GetAll().FirstOrDefault(x => x.Id == message.SensorType);
-            //if (sensor == null)
-            //    return BadRequest("wrong sensor type");
-            //var sensorData = new SensorData
-            //{
-            //    Device = device,
-            //    SensorType = sensor,
-            //    EventDateTime = DateTime.Now,
-            //    Value = message.Value
-            //};
-            //dataReposytory.Create(sensorData);
             try
             {
-                dataReposytory.WriteSensorData(message);
+                dataRepository.WriteSensorData(message);
             }
             catch (Exception ex)
             {

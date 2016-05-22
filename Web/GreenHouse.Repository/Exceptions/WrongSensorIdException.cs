@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GreenHouse.Repository.Repository
+namespace GreenHouse.Repository.Exceptions
 {
-    class SensorTypeNotFoundException : Exception
+    public class WrongSensorIdException : Exception
     {
     }
 }

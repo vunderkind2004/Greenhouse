@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiModels\GreenHouseDataMessage.cs" />
     <Compile Include="ApiModels\HumidityData.cs" />
     <Compile Include="ApiModels\SensorDataMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IDeviceDataRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ISensorDataRepository.cs" />
     <Compile Include="Responses\SensorDataResponse.cs" />

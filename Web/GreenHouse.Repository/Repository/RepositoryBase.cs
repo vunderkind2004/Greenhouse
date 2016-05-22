@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -81,6 +82,15 @@ namespace GreenHouse.Repository.Repository
         private OrmLiteConnectionFactory GetFactory()
         {
             return new OrmLiteConnectionFactory( connectionString,SqlServerDialect.Provider);
+        }
+
+        public IQueryable<T> Select(Expression<Func<T, bool>> predicate)
+        {
+            var factory = GetFactory();
+            using (var db = factory.Open())
+            {
+                return db.Select<T>(predicate).AsQueryable<T>();               
+            }
         }
 
 

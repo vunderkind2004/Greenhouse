@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -15,5 +16,6 @@ namespace GreenHouse.Interfaces.Repository
         void Create<T>(T entity);
         void Update<T>(T entity);
         void Delete<T>(T entity);
+        IQueryable<T> Select(Expression<Func<T, bool>> predicate);
     }
 }

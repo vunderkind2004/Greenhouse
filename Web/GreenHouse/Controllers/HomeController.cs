@@ -13,14 +13,16 @@ namespace GreenHouse.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly IRepository<SensorType> sensorRepository;
+        private readonly IRepository<SensorType> sensorTypeRepository;
+        private readonly IRepository<Sensor> sensorRepository;
         private readonly IRepository<Device> deviceRepository;
         private readonly ISensorDataRepository dataReposytory;
         private readonly IRepository<User> userRepository;
 
-        public HomeController(IRepository<SensorType> sensorRepository, IRepository<Device> deviceRepository,
-            ISensorDataRepository dataReposytory, IRepository<User> userRepository)
+        public HomeController(IRepository<SensorType> sensorTypeRepository, IRepository<Device> deviceRepository,
+            ISensorDataRepository dataReposytory, IRepository<User> userRepository, IRepository<Sensor> sensorRepository)
         {
+            this.sensorTypeRepository = sensorTypeRepository;
             this.sensorRepository = sensorRepository;
             this.deviceRepository = deviceRepository;
             this.dataReposytory = dataReposytory;
@@ -44,7 +46,7 @@ namespace GreenHouse.Controllers
         public ActionResult AddSensorType(SensorTypeViewModel model)
         {
             var sensorType = new SensorType{TypeName = model.TypeName, Dimension = model.Dimension};
-            sensorRepository.Create(sensorType);
+            sensorTypeRepository.Create(sensorType);
             return View("SensorTypeAdded",model);
         }
 
@@ -80,13 +82,61 @@ namespace GreenHouse.Controllers
         public ActionResult GetDevices()
         {
             var userId = GetUserId();
-            var devices = deviceRepository.GetAll().Where(x=>x.UserId==userId).Select(x=>new DeviceViewModel{Name = x.Name, Summary = x.Summary, Token = x.Token});
+            var devices = GetDevices(userId);
             return View(devices);
+        }
+
+        public ActionResult GetSensors()
+        {
+            var userId = GetUserId();
+
+            var userDevices = deviceRepository.Select(x => x.UserId == userId).ToList();
+            var userDeviceIds = userDevices.Select(x=>x.Id).ToArray();
+            var sensors = sensorRepository.Select(x=>userDeviceIds.Contains(x.DeviceId))
+                .Select(x => new SensorViewModel 
+                { 
+                    Id = x.Id,
+                    Name = x.Name, 
+                    TypeId = x.SensorTypeId, 
+                    DeviceId = x.DeviceId, 
+                    Location = x.Location, 
+                    DeviceName = userDevices.First(d=>d.Id==x.DeviceId).Name 
+                }).ToList();
+            return View(sensors);
+        }
+
+        [HttpGet]
+        public ActionResult AddSensor()
+        {
+            var userId = GetUserId();
+            var model = new SensorViewModel
+            {
+                AveableDevices = GetDevices(userId)
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddSensor(SensorViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+            var device = deviceRepository.GetAll().Where(x => x.Id == model.DeviceId).FirstOrDefault();
+            var userId = GetUserId();
+            if (device == null || device.UserId != userId)
+            {
+                model.AveableDevices = GetDevices(userId);
+                ModelState.AddModelError("DeviceId", "wrong deviceId");
+                return View(model);
+            }
+            var sensor = new Sensor{DeviceId = model.DeviceId, Name = model.Name, SensorTypeId = model.TypeId, Location = model.Location};
+            sensorRepository.Create(sensor);
+            return RedirectToAction("GetSensors");
         }
 
         public ActionResult GetSensorTypes()
         {
-            var sensorTypes = sensorRepository.GetAll().Select(x=>new SensorTypeViewModel{TypeName=x.TypeName, Dimension= x.Dimension, TypeId =  x.Id});
+            var sensorTypes = sensorTypeRepository.GetAll().Select(x=>new SensorTypeViewModel{TypeName=x.TypeName, Dimension= x.Dimension, TypeId =  x.Id});
             return View(sensorTypes);
         }
 
@@ -109,6 +159,12 @@ namespace GreenHouse.Controllers
             var login = User.Identity.Name;
             var user = userRepository.GetAll().Where(x => x.Login == login).First();
             return user.Id;
+        }
+
+        private IEnumerable<DeviceViewModel> GetDevices(int userId)
+        {
+            var devices =  deviceRepository.GetAll().Where(x => x.UserId == userId).Select(x => new DeviceViewModel {Id = x.Id, Name = x.Name, Summary = x.Summary, Token = x.Token });
+            return devices;
         }
 
     }

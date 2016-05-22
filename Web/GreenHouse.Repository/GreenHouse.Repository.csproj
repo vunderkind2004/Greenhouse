@@ -52,6 +52,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,15 +64,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\BaseModel.cs" />
+    <Compile Include="DataModel\Sensor.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="DataModel\Device.cs" />
     <Compile Include="DataModel\SensorType.cs" />
     <Compile Include="DataModel\SensorData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\DeviceNotFoundException.cs" />
+    <Compile Include="Repository\DeviceDataRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\SensorDataRepository.cs" />
-    <Compile Include="Exceptions\SensorTypeNotFoundException.cs" />
+    <Compile Include="Exceptions\SensorNotFoundException.cs" />
+    <Compile Include="Exceptions\WrongSensorIdException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GreenHouse.Interfaces\GreenHouse.Interfaces.csproj">

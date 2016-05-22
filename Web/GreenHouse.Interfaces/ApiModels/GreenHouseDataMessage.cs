@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace GreenHouse.Interfaces.ApiModels
 {
-    public class SensorDataMessage
+    public class GreenHouseDataMessage
     {
-        public string Token { get; set; }
+        public string DeviceToken { get; set; }
+        public SensorData[] SensorsData { get; set; }
+    }
+
+    public class SensorData
+    {
         public int SensorId { get; set; }
         public float Value { get; set; }
-        //public DateTime? HardwareTime { get; set; }
     }
 }
