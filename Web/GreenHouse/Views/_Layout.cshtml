@@ -7,14 +7,30 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="~/Content/Styles/bootstrap.min.css" />
     <script src="~/Script/jquery-1.11.3.min.js"></script>
+    <script src="~/Script/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="row">            
             <div class="logo" style="background-color:rgba(11, 184, 182, 0.09)">
                 <img src="../Content/Img/IoT.png" alt="" class="clear" />
-                <span class="h1">Internet of things. Greenhouse.</span>    
-            </div>
+                <span class="h1">Internet of things. Greenhouse.</span>   
+                <div class="pull-right">
+                    Welcome 
+                    <span class="dropdown">
+                        <a href="#" class="dropdown-toggle" id="dropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span >
+                                @User.Identity.Name
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdown1">
+                            <li>
+                                @Html.ActionLink("Log off","logoff","Account")
+                            </li>                            
+                        </ul>
+                    </span>                    
+                </div> 
+            </div>      
         </div>
         <div>
         <ul class="nav nav-tabs nav-justified">            

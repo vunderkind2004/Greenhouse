@@ -185,6 +185,7 @@
     <Content Include="Content\Styles\bootstrap-theme.min.css" />
     <Content Include="Content\Styles\bootstrap.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Script\bootstrap.min.js" />
     <Content Include="Script\jquery-1.11.3.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
