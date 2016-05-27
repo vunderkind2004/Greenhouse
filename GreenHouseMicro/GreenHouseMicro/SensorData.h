@@ -10,8 +10,10 @@
 #endif
 
 class SensorDataClass
-{	
+{		
   public:	
+	SensorDataClass();
+	SensorDataClass(float h, float t);
 	float HumidityIn;
 	float TemperatureIn;
 };

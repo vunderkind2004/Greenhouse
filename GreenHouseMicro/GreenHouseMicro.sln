@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StaticIp", "StaticIp\Static
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MicroWebServer", "MicroWebServer\MicroWebServer.vcxproj", "{8F6E18E6-F487-4027-BF5D-FCC84BDCE9C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoTest", "CryptoTest\CryptoTest.csproj", "{4834F392-DB8A-42B7-81D0-E5E0768F0482}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{8F6E18E6-F487-4027-BF5D-FCC84BDCE9C4}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{8F6E18E6-F487-4027-BF5D-FCC84BDCE9C4}.Release|Win32.ActiveCfg = Release|Win32
 		{8F6E18E6-F487-4027-BF5D-FCC84BDCE9C4}.Release|Win32.Build.0 = Release|Win32
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

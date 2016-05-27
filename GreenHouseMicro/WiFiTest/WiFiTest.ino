@@ -28,7 +28,7 @@
 //using namespace ArduinoJson::Parser;
  
 #define SSID "HomeFastInet" // введите ваш SSID
-#define PASS "RouterBOOST123" // введите ваш пароль
+#define PASS "xxxxxxxxx" // введите ваш пароль
 #define LOCATIONID "2925533" // id местоположения
 #define DST_IP "50.16.215.101" //api.openweathermap.org
 //SoftwareSerial Serial(2, 3); // RX, TX для отладки

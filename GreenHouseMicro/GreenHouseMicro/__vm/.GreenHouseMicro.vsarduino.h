@@ -63,6 +63,11 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 #include <..\GreenHouseMicro\GreenHouseMicro.ino>
+#include <..\GreenHouseMicro\Crypto.cpp>
+#include <..\GreenHouseMicro\Crypto.h>
 #include <..\GreenHouseMicro\SensorData.cpp>
 #include <..\GreenHouseMicro\SensorData.h>
+#include <..\GreenHouseMicro\device_config.h>
+#include <..\GreenHouseMicro\osapi.h>
+#include <..\GreenHouseMicro\user_config.h>
 #endif

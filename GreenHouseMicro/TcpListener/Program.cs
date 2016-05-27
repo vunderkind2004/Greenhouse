@@ -23,7 +23,7 @@ namespace MyTcpListener
 
         private static void Start()
         {
-            listener = new TcpListener(IPAddress.Parse("192.168.1.106"), 80);
+            listener = new TcpListener(IPAddress.Parse("192.168.1.106"), 60000);
             listener.Start();
             listener.BeginAcceptTcpClient(callback, listener);
         }
