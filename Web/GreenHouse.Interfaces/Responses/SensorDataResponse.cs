@@ -11,9 +11,15 @@ namespace GreenHouse.Interfaces.Responses
         public DateTime EventDateTime { get; set; }
         public float Value { get; set; }
 
-        public string TypeName { get; set; }
+        public string SensorName { get; set; }
         public string Dimension { get; set; }
 
         public string DeviceName { get; set; }
+
+        public string DataSetName { get 
+            {
+                return DeviceName + " " + SensorName + " " + Dimension;
+            }
+        }
     }
 }

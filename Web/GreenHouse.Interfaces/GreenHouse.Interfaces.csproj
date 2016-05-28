@@ -46,6 +46,7 @@
     <Compile Include="Repository\IDeviceDataRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\ISensorDataRepository.cs" />
+    <Compile Include="Responses\AddSensorDataResponse.cs" />
     <Compile Include="Responses\SensorDataResponse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

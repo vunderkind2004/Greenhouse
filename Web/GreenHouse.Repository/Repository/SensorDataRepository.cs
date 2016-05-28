@@ -44,15 +44,19 @@ namespace GreenHouse.Repository.Repository
             }
         }
 
-        public IEnumerable<SensorDataResponse> GetData(int skipCount, int takeCount)
+        public IEnumerable<SensorDataResponse> GetData(string userName,int skipCount, int takeCount)
         {
             var factory = GetFactory();
             using (var db = factory.Open())
             {
-                var allData = db.LoadSelect<GreenHouse.Repository.DataModel.SensorData>()
+                var user = db.Single<User>(x=>x.Login == userName);
+                var userDeviceIds = db.Select<Device>(x => x.UserId == user.Id).Select(x=>x.Id).ToArray();
+                var userSensorIds = db.Select<Sensor>(x => userDeviceIds.Contains(x.DeviceId)).Select(x=>x.Id).ToArray();
+                var allData = db.LoadSelect<GreenHouse.Repository.DataModel.SensorData>(x => userSensorIds.Contains(x.SensorId))
                     .OrderByDescending(x=>x.EventDateTime)
                     .Skip(skipCount)
-                    .Take(takeCount);
+                    .Take(takeCount)
+                    .OrderBy(x=>x.EventDateTime);
 
                 var devices = db.Select<Device>(x => allData.Select(d => d.Sensor.DeviceId).Contains(x.Id));
 
@@ -62,7 +66,7 @@ namespace GreenHouse.Repository.Repository
                 {
                     EventDateTime = x.EventDateTime,
                     DeviceName = devices.First(d=>d.Id == x.Sensor.DeviceId).Name,
-                    TypeName = sensorTypes.First(sType => sType.Id == x.Sensor.SensorTypeId).TypeName,
+                    SensorName = x.Sensor.Name,// sensorTypes.First(sType => sType.Id == x.Sensor.SensorTypeId).SensorName,
                     Value = x.Value,
                     Dimension = sensorTypes.First(sType => sType.Id == x.Sensor.SensorTypeId).Dimension,
                 });

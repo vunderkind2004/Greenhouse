@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using GreenHouse.Helpers;
+using GreenHouse.Hubs;
 using GreenHouse.Interfaces.ApiModels;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Repository.DataModel;
@@ -41,7 +43,11 @@ namespace GreenHouse.Api
                 return BadRequest();
             try
             {
-                dataRepository.Write(message);
+                var responce = dataRepository.Write(message);
+
+                var datasets = ChartHelper.GetDataSets(responce.SensorDataResponse);
+
+                SensorDataHubProxy.AddData(responce.UserName, datasets);
             }
             catch (Exception ex)
             {

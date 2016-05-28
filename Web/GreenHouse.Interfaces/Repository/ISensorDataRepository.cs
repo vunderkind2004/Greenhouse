@@ -11,6 +11,6 @@ namespace GreenHouse.Interfaces.Repository
     public interface ISensorDataRepository
     {
         void WriteSensorData(SensorDataMessage message);
-        IEnumerable<SensorDataResponse> GetData(int skipCount, int takeCount);
+        IEnumerable<SensorDataResponse> GetData(string userName,int skipCount, int takeCount);
     }
 }

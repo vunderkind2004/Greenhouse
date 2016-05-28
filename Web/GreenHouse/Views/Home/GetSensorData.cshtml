@@ -5,41 +5,12 @@
     Layout = "~/Views/_Layout.cshtml";   
         
 }
-
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
 <script src="~/Script/Chart.min.js"></script>
 
 
 <canvas id="canvas" width="1175" height="587" style="width: 1175px; height: 587px;"></canvas>
-
-@if (Model!=null && Model.DataSets.Any())
-{
-    <table class="table table-hover">
-        <tr>
-            <th>Date</th>
-            @foreach (var dataSet in Model.DataSets)
-            {
-                <th>
-                    @dataSet.Label
-                </th> 
-            }            
-        </tr>
-    
-        
-        @for (var i = 0; i < Model.Timestamps.Length; i++ )
-        {
-        <tr>
-            <td>@Model.Timestamps[i]</td>
-            @foreach (var dataSet in Model.DataSets)
-            {
-                <td>
-                    @dataSet.Data[i]
-                </td> 
-            }   
-        </tr>
-    
-        }
-    </table>
-}
 
 <script type="text/javascript">
 
@@ -57,29 +28,6 @@
 
     var config = {
         type: 'line',
-        //data: {
-        //    labels: ["January", "February", "March", "April", "May", "June", "July"],
-        //    datasets: [{
-        //        label: "My First dataset",
-        //        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-        //        fill: false,
-        //        borderDash: [5, 5],
-        //    }, {
-        //        label: "My Second dataset",
-        //        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-        //        fill: false,
-        //        borderDash: [5, 5],
-        //    }, {
-        //        label: "My Third dataset - No bezier",
-        //        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-        //        lineTension: 0,
-        //        fill: false,
-        //    }, {
-        //        label: "My Fourth dataset",
-        //        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-        //        fill: false,
-        //    }]
-        //},
         data: {
             labels:  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Timestamps)),
             datasets: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DataSets))
@@ -116,19 +64,57 @@
     };
 
 
-    //$.each(config.data.datasets, function (i, dataset) {
-    //    var background = randomColor(0.5);
-    //    dataset.borderColor = background;
-    //    dataset.backgroundColor = background;
-    //    dataset.pointBorderColor = background;
-    //    dataset.pointBackgroundColor = background;
-    //    dataset.pointBorderWidth = 1;
-    //});
-
-
     window.onload = function () {
-        var ctx = document.getElementById("canvas").getContext("2d");
-        window.myLine = new Chart(ctx, config);
+        //DrowChart();
     };
+
+    //signalR
+    $(function(){
+        var hub = $.connection.sensorDataHub;
+        hub.client.send = function(message){
+            console.log(message);            
+        }
+
+        hub.client.loadData = function(data){
+            //todo: implement
+            console.log("load data");
+            //DrowChart();
+        };
+
+        hub.client.addData = function(data){
+            //TODO: implement
+            console.log("add data");
+            for(var i=0; i<data.Timestamps.length;i++)
+            {
+                config.data.labels.shift();
+                config.data.labels.push(data.Timestamps[i]);
+
+                for(var j=0; j< config.data.datasets.length;j++)
+                {
+                    config.data.datasets[j].data.shift();
+                    var dataSetName = config.data.datasets[j].label;
+                    var newValue = NaN;
+                    for(var k=0; k< data.DataSets.length;k++)
+                    {
+                        var newDataSetName = data.DataSets[k].label;
+                        if(dataSetName===newDataSetName)
+                            newValue = data.DataSets[k].data[i];
+                    }
+                    config.data.datasets[j].data.push(newValue);     
+                    
+                }
+            }
+            window.myLine.update();
+        }
+        $.connection.hub.start().done(function () {           
+            //hub.server.getData(); 
+            DrowChart();
+        });
+
+        function DrowChart (){
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        };
+    });
+
 </script>
-}

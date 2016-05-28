@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GreenHouse.Interfaces.ApiModels;
+using GreenHouse.Interfaces.Responses;
 
 namespace GreenHouse.Interfaces.Repository
 {
     public interface IDeviceDataRepository
     {
-        void Write(GreenHouseDataMessage message);
+        AddSensorDataResponse Write(GreenHouseDataMessage message);
     }
 }

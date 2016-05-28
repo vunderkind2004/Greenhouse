@@ -22,7 +22,7 @@ namespace GreenHouse.Repository.Repository
             this.connectionString = connectionString;
         }
 
-        public void Write(GreenHouseDataMessage message)
+        public AddSensorDataResponse Write(GreenHouseDataMessage message)
         {
             var factory = GetFactory();
             using (var db = factory.Open())
@@ -35,15 +35,31 @@ namespace GreenHouse.Repository.Repository
                 var sensors = db.Select<Sensor>(s => sensorIds.Contains(s.Id));
                 if(sensors.Any(x=>x.DeviceId!=device.Id) || sensorIds.Count()!=sensors.Count())
                     throw new WrongSensorIdException();
+                var time = DateTime.Now;
                 var data = message.SensorsData.Select(x => new GreenHouse.Repository.DataModel.SensorData
                     {
                         //DeviceId = device.Id,
-                        EventDateTime = DateTime.Now,
+                        EventDateTime = time,
                         SensorId = x.SensorId,
                         Value = x.Value
                     }
                 );               
                 db.InsertAll(data);
+
+                var sensorTypes = db.Select<SensorType>();
+
+                var response = message.SensorsData.Select(x => new SensorDataResponse
+                {
+                    DeviceName = device.Name,
+                    EventDateTime = time,
+                    SensorName = sensors.First(s=>s.Id == x.SensorId).Name,
+                    Dimension = sensorTypes.First(sType => sType.Id == sensors.First(s=>s.Id==x.SensorId).SensorTypeId).Dimension,
+                    Value = x.Value
+                });
+
+                var user = db.Single<User>(x => x.Id == device.UserId);
+
+                return new AddSensorDataResponse { SensorDataResponse = response, UserName = user.Login};
             }
         }
 
