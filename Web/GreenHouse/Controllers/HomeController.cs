@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GreenHouse.Interfaces.Repository;
+using GreenHouse.Interfaces.Responses;
 using GreenHouse.Repository.DataModel;
 using GreenHouse.Repository.Repository;
 using GreenHouse.ViewModels;
@@ -143,14 +144,45 @@ namespace GreenHouse.Controllers
         public ActionResult GetSensorData(int skipCount=0, int takeCount=100)
         {
             var data = dataReposytory.GetData(skipCount,takeCount);
-            var model = data.Select(x => new SensorDataViewModel
+            //var model = data.Select(x => new SensorDataViewModel
+            //{
+            //    DeviceName = x.DeviceName,
+            //    EventDateTime = x.EventDateTime,
+            //    SensorType = x.TypeName,
+            //    Value = x.Value,
+            //    SensorDimension = x.Dimension
+            //}).ToList();
+
+            Func<SensorDataResponse, string> getDataSetName = x => x.DeviceName + " " + x.TypeName + " " + x.Dimension;
+            var timeData = data.Select(x => x.EventDateTime).ToArray().Distinct();
+            var datasetNames = data.Select(x => getDataSetName(x)).ToList().Distinct();
+            var datasets = new Dictionary<string, GreenHouse.ViewModels.DataSet>(datasetNames.Count());
+
+            foreach (var name in datasetNames)
             {
-                DeviceName = x.DeviceName,
-                EventDateTime = x.EventDateTime,
-                SensorType = x.TypeName,
-                Value = x.Value,
-                SensorDimension = x.Dimension
-            }).ToList();
+                datasets.Add(name, new GreenHouse.ViewModels.DataSet { Label = name, Data = new float?[timeData.Count()] });
+            }
+
+            var i = 0;
+            foreach (var time in timeData)
+            {
+                var items = data.Where(x => x.EventDateTime == time);
+
+                foreach (var item in items)
+                {
+                    var datasetName = getDataSetName(item);
+
+                    datasets[datasetName].Data[i] = item.Value;
+                }
+                i++;
+            }
+
+            var model = new SensorDataViewModel
+            {
+                Timestamps = timeData.Select(x => x.ToString()).ToArray(),
+                DataSets = datasets.ToList().Select(x => x.Value).ToArray()
+            };
+
             return View(model);
         }
 
