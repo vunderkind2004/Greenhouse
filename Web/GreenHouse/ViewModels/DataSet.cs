@@ -15,6 +15,15 @@ namespace GreenHouse.ViewModels
         public float?[] Data { get; set; }
         [JsonProperty("fill")]
         public bool Fill { get; set; }
+
+        //borderColor: "rgba(75,192,192,1)",
+        [JsonProperty("borderColor")]
+        public string LineColor { get; set; }
+
+        [JsonProperty("pointBorderColor")]
+        public string PointBorderColor { get; set; }
+        [JsonProperty("pointRadius")]
+        public int PointRadius { get { return 1; } }
     }
 
     

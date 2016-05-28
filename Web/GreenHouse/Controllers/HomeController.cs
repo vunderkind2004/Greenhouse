@@ -160,7 +160,14 @@ namespace GreenHouse.Controllers
 
             foreach (var name in datasetNames)
             {
-                datasets.Add(name, new GreenHouse.ViewModels.DataSet { Label = name, Data = new float?[timeData.Count()] });
+                var color = name.ToLower().Contains("temperature") ? "rgba(250, 0, 0,0.4)" : "rgba(0, 0, 200,0.4)";
+                datasets.Add(name, new GreenHouse.ViewModels.DataSet 
+                {
+                    Label = name, 
+                    Data = new float?[timeData.Count()],
+                    LineColor = color,
+                    PointBorderColor = color
+                });
             }
 
             var i = 0;
