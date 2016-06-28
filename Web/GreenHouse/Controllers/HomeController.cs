@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using GreenHouse.Helpers;
+using GreenHouse.Interfaces.Enums;
 using GreenHouse.Interfaces.Repository;
+using GreenHouse.Interfaces.Requests;
 using GreenHouse.Interfaces.Responses;
 using GreenHouse.Repository.DataModel;
 using GreenHouse.Repository.Repository;
 using GreenHouse.ViewModels;
+using Newtonsoft.Json;
 
 namespace GreenHouse.Controllers
 {
@@ -142,11 +146,93 @@ namespace GreenHouse.Controllers
             return View(sensorTypes);
         }
 
-        public ActionResult GetSensorData(int skipCount=0, int takeCount=100)
+        //public ActionResult GetSensorData(int skipCount=0, int takeCount=100)
+        //{
+        //    var data = dataReposytory.GetData(User.Identity.Name,skipCount,takeCount);
+        //    var model = ChartHelper.GetDataSets(data);
+        //    return View(model);
+        //}
+
+        public ActionResult GetSensorData()
         {
-            var data = dataReposytory.GetData(User.Identity.Name,skipCount,takeCount);
+            //var fromDate = DateTime.Now.AddMonths(-3);
+            //var toDate = DateTime.Now;
+            //var groupByTime = GroupByTime.Daily;
+
+            //var model = GetSensorData(User.Identity.Name, fromDate, toDate, FilterByTime.All, groupByTime);
+            //return View(model);
+            return View();
+        }
+
+        public JsonResult GetSensorDataNow(FilterByTime filter = FilterByTime.All)
+        {
+            var fromDate = DateTime.Now.AddHours(-1);
+            var toDate = DateTime.Now;
+            var groupByTime = GroupByTime.Minute;
+
+            var model = GetSensorData(User.Identity.Name, fromDate, toDate, filter, groupByTime);
+
+            return new JsonNetResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetSensorDataDay(FilterByTime filter = FilterByTime.All)
+        {
+            var fromDate = DateTime.Now.AddDays(-1);
+            var toDate = DateTime.Now;
+            var groupByTime = GroupByTime.Hour;
+
+            var model = GetSensorData(User.Identity.Name, fromDate, toDate, filter, groupByTime);
+
+            return new JsonNetResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetSensorDataWeek(FilterByTime filter = FilterByTime.All)
+        {
+            var fromDate = DateTime.Now.AddDays(-7);
+            var toDate = DateTime.Now;
+            var groupByTime = GroupByTime.Daily;
+
+            var model = GetSensorData(User.Identity.Name, fromDate, toDate, filter, groupByTime);
+
+            return new JsonNetResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetSensorDataMonth(FilterByTime filter = FilterByTime.All)
+        {
+            var fromDate = DateTime.Now.AddMonths(-1);
+            var toDate = DateTime.Now;
+            var groupByTime = GroupByTime.Week;
+
+            var model = GetSensorData(User.Identity.Name, fromDate, toDate, filter, groupByTime);
+
+            return new JsonNetResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetSensorDataYear(FilterByTime filter = FilterByTime.All)
+        {
+            var fromDate = DateTime.Now.AddYears(-1);
+            var toDate = DateTime.Now;
+            var groupByTime = GroupByTime.Month;
+
+            var model = GetSensorData(User.Identity.Name, fromDate, toDate, filter, groupByTime);
+
+            return new JsonNetResult { Data = model, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        private SensorDataViewModel GetSensorData(string userName, DateTime fromDate, DateTime toDate, FilterByTime filter, GroupByTime group)
+        {
+            var request = new GetGroupedSensorDataRequest
+            {
+                UserName = userName,
+                FromDate = fromDate,
+                ToDate = toDate,
+                GroupByTime = group,
+                FilterByTime = filter
+            };
+
+            var data = dataReposytory.GetData(request);
             var model = ChartHelper.GetDataSets(data);
-            return View(model);
+            return model;
         }
 
         private int GetUserId()

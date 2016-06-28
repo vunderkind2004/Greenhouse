@@ -17,6 +17,10 @@ namespace GreenHouse
         {
             //AreaRegistration.RegisterAllAreas();
 
+#if DEBUG
+            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+#endif
+
             //WebApiConfig.Register(GlobalConfiguration.Configuration);
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

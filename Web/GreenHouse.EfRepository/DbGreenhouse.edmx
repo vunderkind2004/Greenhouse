@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GreenHouseDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="GreenHouseDbModelStoreContainer">
+          <EntitySet Name="Device" EntityType="GreenHouseDbModel.Store.Device" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Sensor" EntityType="GreenHouseDbModel.Store.Sensor" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SensorData" EntityType="GreenHouseDbModel.Store.SensorData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SensorType" EntityType="GreenHouseDbModel.Store.SensorType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="GreenHouseDbModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SensorDataView" EntityType="GreenHouseDbModel.Store.SensorDataView" store:Type="Views" store:Schema="dbo" store:Name="SensorDataView">
+            <DefiningQuery>SELECT 
+      [SensorDataView].[Id] AS [Id], 
+      [SensorDataView].[EventDateTime] AS [EventDateTime], 
+      [SensorDataView].[SensorId] AS [SensorId], 
+      [SensorDataView].[Value] AS [Value], 
+      [SensorDataView].[date] AS [date], 
+      [SensorDataView].[time] AS [time], 
+      [SensorDataView].[week] AS [week], 
+      [SensorDataView].[day] AS [day], 
+      [SensorDataView].[month] AS [month], 
+      [SensorDataView].[hour] AS [hour], 
+      [SensorDataView].[minute] AS [minute], 
+      [SensorDataView].[year] AS [year]
+      FROM [dbo].[SensorDataView] AS [SensorDataView]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Device_ToUser" Association="GreenHouseDbModel.Store.FK_Device_ToUser">
+            <End Role="User" EntitySet="User" />
+            <End Role="Device" EntitySet="Device" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sensor_Device" Association="GreenHouseDbModel.Store.FK_Sensor_Device">
+            <End Role="Device" EntitySet="Device" />
+            <End Role="Sensor" EntitySet="Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sensor_SensorType" Association="GreenHouseDbModel.Store.FK_Sensor_SensorType">
+            <End Role="SensorType" EntitySet="SensorType" />
+            <End Role="Sensor" EntitySet="Sensor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SensorData_Sensor" Association="GreenHouseDbModel.Store.FK_SensorData_Sensor">
+            <End Role="Sensor" EntitySet="Sensor" />
+            <End Role="SensorData" EntitySet="SensorData" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Summary" Type="nvarchar(max)" />
+          <Property Name="Token" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sensor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SensorTypeId" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar(max)" />
+          <Property Name="DeviceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SensorData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EventDateTime" Type="datetime" Nullable="false" />
+          <Property Name="SensorId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SensorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Dimension" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PasswordHash" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'GreenHouseDb.dbo.SensorDataView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SensorDataView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EventDateTime" />
+            <PropertyRef Name="SensorId" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EventDateTime" Type="datetime" Nullable="false" />
+          <Property Name="SensorId" Type="int" Nullable="false" />
+          <Property Name="Value" Type="float" Nullable="false" />
+          <Property Name="date" Type="date" />
+          <Property Name="time" Type="time" />
+          <Property Name="week" Type="int" />
+          <Property Name="day" Type="int" />
+          <Property Name="month" Type="int" />
+          <Property Name="hour" Type="int" />
+          <Property Name="minute" Type="int" />
+          <Property Name="year" Type="int" />
+        </EntityType>
+        <Association Name="FK_Device_ToUser">
+          <End Role="User" Type="GreenHouseDbModel.Store.User" Multiplicity="1" />
+          <End Role="Device" Type="GreenHouseDbModel.Store.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sensor_Device">
+          <End Role="Device" Type="GreenHouseDbModel.Store.Device" Multiplicity="1" />
+          <End Role="Sensor" Type="GreenHouseDbModel.Store.Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sensor">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sensor_SensorType">
+          <End Role="SensorType" Type="GreenHouseDbModel.Store.SensorType" Multiplicity="1" />
+          <End Role="Sensor" Type="GreenHouseDbModel.Store.Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SensorType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sensor">
+              <PropertyRef Name="SensorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SensorData_Sensor">
+          <End Role="Sensor" Type="GreenHouseDbModel.Store.Sensor" Multiplicity="1" />
+          <End Role="SensorData" Type="GreenHouseDbModel.Store.SensorData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sensor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SensorData">
+              <PropertyRef Name="SensorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GreenHouseDbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GreenHouseDbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Devices" EntityType="GreenHouseDbModel.Device" />
+          <EntitySet Name="Sensors" EntityType="GreenHouseDbModel.Sensor" />
+          <EntitySet Name="SensorData" EntityType="GreenHouseDbModel.SensorData" />
+          <EntitySet Name="SensorTypes" EntityType="GreenHouseDbModel.SensorType" />
+          <EntitySet Name="Users" EntityType="GreenHouseDbModel.User" />
+          <AssociationSet Name="FK_Device_ToUser" Association="GreenHouseDbModel.FK_Device_ToUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sensor_Device" Association="GreenHouseDbModel.FK_Sensor_Device">
+            <End Role="Device" EntitySet="Devices" />
+            <End Role="Sensor" EntitySet="Sensors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sensor_SensorType" Association="GreenHouseDbModel.FK_Sensor_SensorType">
+            <End Role="SensorType" EntitySet="SensorTypes" />
+            <End Role="Sensor" EntitySet="Sensors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SensorData_Sensor" Association="GreenHouseDbModel.FK_SensorData_Sensor">
+            <End Role="Sensor" EntitySet="Sensors" />
+            <End Role="SensorData" EntitySet="SensorData" />
+          </AssociationSet>
+          <EntitySet Name="SensorDataView" EntityType="GreenHouseDbModel.SensorDataView" />
+        </EntityContainer>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="GreenHouseDbModel.FK_Device_ToUser" FromRole="Device" ToRole="User" />
+          <NavigationProperty Name="Sensors" Relationship="GreenHouseDbModel.FK_Sensor_Device" FromRole="Device" ToRole="Sensor" />
+        </EntityType>
+        <EntityType Name="Sensor">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SensorTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DeviceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Device" Relationship="GreenHouseDbModel.FK_Sensor_Device" FromRole="Sensor" ToRole="Device" />
+          <NavigationProperty Name="SensorType" Relationship="GreenHouseDbModel.FK_Sensor_SensorType" FromRole="Sensor" ToRole="SensorType" />
+          <NavigationProperty Name="SensorData" Relationship="GreenHouseDbModel.FK_SensorData_Sensor" FromRole="Sensor" ToRole="SensorData" />
+        </EntityType>
+        <EntityType Name="SensorData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EventDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SensorId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Sensor" Relationship="GreenHouseDbModel.FK_SensorData_Sensor" FromRole="SensorData" ToRole="Sensor" />
+        </EntityType>
+        <EntityType Name="SensorType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Dimension" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Sensors" Relationship="GreenHouseDbModel.FK_Sensor_SensorType" FromRole="SensorType" ToRole="Sensor" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Devices" Relationship="GreenHouseDbModel.FK_Device_ToUser" FromRole="User" ToRole="Device" />
+        </EntityType>
+        <Association Name="FK_Device_ToUser">
+          <End Role="User" Type="GreenHouseDbModel.User" Multiplicity="1" />
+          <End Role="Device" Type="GreenHouseDbModel.Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sensor_Device">
+          <End Role="Device" Type="GreenHouseDbModel.Device" Multiplicity="1" />
+          <End Role="Sensor" Type="GreenHouseDbModel.Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Device">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sensor">
+              <PropertyRef Name="DeviceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sensor_SensorType">
+          <End Role="SensorType" Type="GreenHouseDbModel.SensorType" Multiplicity="1" />
+          <End Role="Sensor" Type="GreenHouseDbModel.Sensor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SensorType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sensor">
+              <PropertyRef Name="SensorTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SensorData_Sensor">
+          <End Role="Sensor" Type="GreenHouseDbModel.Sensor" Multiplicity="1" />
+          <End Role="SensorData" Type="GreenHouseDbModel.SensorData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sensor">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SensorData">
+              <PropertyRef Name="SensorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SensorDataView">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="EventDateTime" />
+            <PropertyRef Name="SensorId" />
+            <PropertyRef Name="Value" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="EventDateTime" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="SensorId" Nullable="false" />
+          <Property Type="Double" Name="Value" Nullable="false" />
+          <Property Type="DateTime" Name="date" Precision="0" />
+          <Property Type="Time" Name="time" Precision="7" />
+          <Property Type="Int32" Name="week" />
+          <Property Type="Int32" Name="day" />
+          <Property Type="Int32" Name="month" />
+          <Property Type="Int32" Name="hour" />
+          <Property Type="Int32" Name="year" />
+          <Property Type="Int32" Name="minute" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GreenHouseDbModelStoreContainer" CdmEntityContainer="GreenHouseDbEntities">
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.Device">
+              <MappingFragment StoreEntitySet="Device">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sensors">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.Sensor">
+              <MappingFragment StoreEntitySet="Sensor">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SensorTypeId" ColumnName="SensorTypeId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SensorData">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.SensorData">
+              <MappingFragment StoreEntitySet="SensorData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="SensorId" ColumnName="SensorId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SensorTypes">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.SensorType">
+              <MappingFragment StoreEntitySet="SensorType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="Dimension" ColumnName="Dimension" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SensorDataView">
+            <EntityTypeMapping TypeName="GreenHouseDbModel.SensorDataView">
+              <MappingFragment StoreEntitySet="SensorDataView">
+                <ScalarProperty Name="minute" ColumnName="minute" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="hour" ColumnName="hour" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="week" ColumnName="week" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="SensorId" ColumnName="SensorId" />
+                <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

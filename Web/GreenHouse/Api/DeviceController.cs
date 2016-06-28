@@ -27,16 +27,16 @@ namespace GreenHouse.Api
         public IHttpActionResult AddDeviceData(GreenHouseDataMessage message)
         {
             //Example:
-            //{
-            //    'DeviceToken': 'e0559f6b-30fa-47b1-9a07-915a015129a3',
-            //    'SensorsData' :
-            //    [
-            //        {
-            //        'SensorId' : 1,
-            //        'Value' : 31
-            //        }
-            //    ]
-            //}
+            /*{
+                'DeviceToken': 'e0559f6b-30fa-47b1-9a07-915a015129a3',
+                'SensorsData' :
+                [
+                    {
+                    'SensorId' : 1,
+                    'Value' : 31
+                    }
+                ]
+            }*/
 
 
             if (message == null)

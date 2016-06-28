@@ -13,14 +13,15 @@ namespace GreenHouse.Helpers
         {
             var timeData = data.Select(x => x.EventDateTime).ToArray().Distinct();
             var datasetNames = data.Select(x => x.DataSetName).ToList().Distinct();
-            var datasets = new Dictionary<string, GreenHouse.ViewModels.DataSet>(datasetNames.Count());
+
+            var datasets = new Dictionary<string, DataSet>();
 
             foreach (var name in datasetNames)
             {
                 var color = name.ToLower().Contains("temperature") ? "rgba(250, 0, 0,0.4)" : "rgba(0, 0, 200,0.4)";
-                datasets.Add(name, new GreenHouse.ViewModels.DataSet 
+                datasets.Add(name, new GreenHouse.ViewModels.DataSet
                 {
-                    Label = name, 
+                    Label = name,
                     Data = new float?[timeData.Count()],
                     LineColor = color,
                     PointBorderColor = color
@@ -40,7 +41,7 @@ namespace GreenHouse.Helpers
                 }
                 i++;
             }
-
+                        
             var model = new SensorDataViewModel
             {
                 Timestamps = timeData.Select(x => x.ToString()).ToArray(),
@@ -48,5 +49,25 @@ namespace GreenHouse.Helpers
             };
             return model;
         }
+
+        public static SensorDataViewModel GetDataSets(GetGroupedSensorDataResponse gropedData)
+        {
+            var timeStamps = gropedData.GroupedData.Select(x => x.EventTime.ToString()).Distinct().ToArray();
+            var dataSets = gropedData.GroupedData
+                .GroupBy(x => x.SensorId)
+                .Select(x => new DataSet
+                {
+                    Data = x.Select(y => (float?)y.AverageValue).ToArray(),
+                    Label = gropedData.SensorIdLabels[x.Key]                    
+                }).ToArray();
+
+            var model = new SensorDataViewModel
+            {
+                Timestamps = timeStamps,
+                DataSets = dataSets
+            };
+            return model;
+        }                
+    
     }
 }

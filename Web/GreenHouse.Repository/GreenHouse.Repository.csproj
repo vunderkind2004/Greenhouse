@@ -73,11 +73,14 @@
     <Compile Include="Exceptions\DeviceNotFoundException.cs" />
     <Compile Include="Repository\DeviceDataRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
-    <Compile Include="Repository\SensorDataRepository.cs" />
     <Compile Include="Exceptions\SensorNotFoundException.cs" />
     <Compile Include="Exceptions\WrongSensorIdException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Greenhouse.Core\Greenhouse.Core.csproj">
+      <Project>{fd579bc6-6beb-42db-9779-2571ae348d62}</Project>
+      <Name>Greenhouse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenHouse.Interfaces\GreenHouse.Interfaces.csproj">
       <Project>{5a2eba1b-fae7-41d1-b282-3ddca3bcabfb}</Project>
       <Name>GreenHouse.Interfaces</Name>
@@ -86,6 +89,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd67d5aad6504ce1830d9ee4e42d51ac" Name="Diagram1">
+        <EntityTypeShape EntityType="GreenHouseDbModel.Device" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenHouseDbModel.Sensor" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenHouseDbModel.SensorData" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenHouseDbModel.SensorType" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GreenHouseDbModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="GreenHouseDbModel.FK_Device_ToUser" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenHouseDbModel.FK_Sensor_Device" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenHouseDbModel.FK_Sensor_SensorType" ManuallyRouted="false" />
+        <AssociationConnector Association="GreenHouseDbModel.FK_SensorData_Sensor" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GreenHouseDbModel.SensorDataView" Width="1.5" PointX="11.72035222301276" PointY="19.097448164176871" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

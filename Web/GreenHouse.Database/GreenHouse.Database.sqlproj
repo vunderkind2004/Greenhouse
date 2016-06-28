@@ -54,6 +54,8 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
+    <Folder Include="Views" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\SensorType.sql" />
@@ -61,8 +63,12 @@
     <Build Include="Tables\SensorData.sql" />
     <Build Include="Tables\User.sql" />
     <Build Include="Tables\Sensor.sql" />
+    <Build Include="Views\SensorDataView.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="GreenHouse.Database.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\AddFunctionDayOrNight.sql" />
   </ItemGroup>
 </Project>

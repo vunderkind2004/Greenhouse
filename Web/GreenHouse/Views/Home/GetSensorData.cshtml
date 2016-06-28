@@ -10,7 +10,15 @@
 <script src="~/Script/Chart.min.js"></script>
 
 
-<canvas id="canvas" width="1175" height="587" style="width: 1175px; height: 587px;"></canvas>
+<canvas id="Now" width="1175" height="587" style="width: 1175px; height: 587px;"></canvas>
+
+<canvas id="Day" width="500" height="300" style="width: 500px; height: 300px;"></canvas>
+<canvas id="Week" width="500" height="300" style="width: 500px; height: 300px;"></canvas>
+<canvas id="Month" width="500" height="300" style="width: 500px; height: 300px;"></canvas>
+<canvas id="Year" width="500" height="300" style="width: 500px; height: 300px;"></canvas>
+
+
+<script src="~/Scripts/ChartDataLogic.js"></script>
 
 <script type="text/javascript">
 
@@ -23,44 +31,6 @@
     };
     var randomColor = function (opacity) {
         return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
-    };
-
-
-    var config = {
-        type: 'line',
-        data: {
-            labels:  @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Timestamps)),
-            datasets: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DataSets))
-        },
-        options: {
-            responsive: true,
-            legend: {
-                position: 'bottom',
-            },
-            hover: {
-                mode: 'label'
-            },
-            scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Value'
-                    }
-                }]
-            },
-            title: {
-                display: true,
-                text: '@ViewBag.Title'
-            }
-        }
     };
 
 
@@ -81,7 +51,10 @@
             //DrowChart();
         };
 
-        hub.client.addData = function(data){
+        var config = {};
+
+        hub.client.addData = function (data) {
+
             //TODO: implement
             console.log("add data");
             for(var i=0; i<data.Timestamps.length;i++)
@@ -104,11 +77,12 @@
                     
                 }
             }
-            window.myLine.update();
+            window.Now.update();
         }
         $.connection.hub.start().done(function () {           
             //hub.server.getData(); 
-            DrowChart();
+            //DrowChart();
+            LoadAll(config);
         });
 
         function DrowChart (){
@@ -118,3 +92,4 @@
     });
 
 </script>
+

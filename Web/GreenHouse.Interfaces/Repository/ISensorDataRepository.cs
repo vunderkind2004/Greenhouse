@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GreenHouse.Interfaces.ApiModels;
+using GreenHouse.Interfaces.Enums;
+using GreenHouse.Interfaces.Requests;
 using GreenHouse.Interfaces.Responses;
 
 namespace GreenHouse.Interfaces.Repository
@@ -11,6 +13,6 @@ namespace GreenHouse.Interfaces.Repository
     public interface ISensorDataRepository
     {
         void WriteSensorData(SensorDataMessage message);
-        IEnumerable<SensorDataResponse> GetData(string userName,int skipCount, int takeCount);
+        GetGroupedSensorDataResponse GetData(GetGroupedSensorDataRequest request);
     }
 }

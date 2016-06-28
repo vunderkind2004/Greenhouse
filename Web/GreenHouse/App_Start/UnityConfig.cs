@@ -1,4 +1,5 @@
 using System;
+using GreenHouse.EfRepository.Repositories;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Repository.DataModel;
 using GreenHouse.Repository.Repository;
@@ -45,7 +46,7 @@ namespace GreenHouse.App_Start
             container.RegisterType<IRepository<Device>, RepositoryBase<Device>>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<SensorData>, RepositoryBase<SensorData>>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<Sensor>, RepositoryBase<Sensor>>(new InjectionConstructor(connectionString));
-            container.RegisterType<ISensorDataRepository, SensorDataRepository>(new InjectionConstructor(connectionString));
+            container.RegisterType<ISensorDataRepository, EfSensorDataRepository>();
             container.RegisterType<IDeviceDataRepository, DeviceDataRepository>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<User>, RepositoryBase<User>>(new InjectionConstructor(connectionString));            
         }
