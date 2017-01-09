@@ -27,6 +27,7 @@ uint32_t timerInterval;
 
 byte Ethernet::buffer[500]; // tcp/ip send and receive buffer
 byte session;
+byte ethernetStatus; // 0-?, 1-ok
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
 
 #define STATIC 0  // set to 1 to disable DHCP (adjust myip/gwip values below)
@@ -47,6 +48,7 @@ static byte gwip[] = { 192,168,1,1 };
 //#define DHTTYPE DHT11   // DHT 11 
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
+#define ResetOut 10
 
 #define Debag_with_serial 0
 
@@ -55,17 +57,13 @@ DHT dht(DHTPIN, DHTTYPE);
 
 void setup(){
 	Serial.begin(57600);
+	pinMode(ResetOut, OUTPUT);
+	digitalWrite(ResetOut, HIGH);
 	timerInterval = 1000 * 30;
 	dht.begin();
-	if (ether.begin(sizeof Ethernet::buffer, mymac,53) == 0) 
-		Serial.println( "Failed to access Ethernet controller");
-	#if STATIC
-	  ether.staticSetup(myip, gwip,gwip);
-	#else
-	  if (!ether.dhcpSetup())
-		Serial.println("DHCP failed");
-	#endif
+	EthernetInitialize();
 	Serial.println("Setup End");
+
 }
 
 void loop(){
@@ -78,27 +76,56 @@ void loop(){
 
 	  Serial.println("cycle");
 
-	  SensorDataClass *sensorData = GetSensorData();	  
+	  SensorDataClass *sensorData = GetSensorData();	 
+	  if(ethernetStatus==0)
+	  {
+		  Reset();
+	  }
 	  SendToWebApi(sensorData);
 	  delete sensorData;
 	}
 }
+
+void Reset()
+{
+	Serial.println("RESET");
+	delay(200);
+	digitalWrite(ResetOut, LOW);
+	delay(500); 
+	digitalWrite(ResetOut, HIGH);
+}
+
+void EthernetInitialize()
+{
+	Serial.println("Initializing Ethernet...");
+	
+	if (ether.begin(sizeof Ethernet::buffer, mymac,53) == 0) 
+	{
+		Serial.println( "Failed to access Ethernet controller");
+		return;
+	}
+	#if STATIC
+	  ether.staticSetup(myip, gwip,gwip);
+	#else
+	  if (!ether.dhcpSetup())
+	  {
+		Serial.println("DHCP failed");
+		return;
+	  }
+	#endif
+	ethernetStatus = 1;
+	Serial.println("Ethernet initialized");
+}
+
+
 // -------------  Call to Web API  -----------------
 
 void SendToWebApi(SensorDataClass *sensorData)
 {
-	/*if (!ether.dnsLookup(website))
-	{
-		Serial.println("DnsFailed");
-		return;
-	}*/
 	char humidity[10];
 	char temperature[10];	
 	String((*sensorData).HumidityIn).toCharArray(humidity,10);
 	String((*sensorData).TemperatureIn).toCharArray(temperature,10);
-
-
-	//const char dataInit[] = "                                                            ";
 
 	char *data;
 	data = new char[700];
@@ -127,9 +154,6 @@ void SendToWebApi(SensorDataClass *sensorData)
 
 	ether.hisport = webApiPort;
 	char headerAndData[500];
-	//char *header = new char[200];
-	//strcpy(header, "Accept: application/json\nContent-Type: application/json");	
-	//strcpy(header, "Accept: application/json");	
 	strcpy(headerAndData, "Content-Length: ");
 	char contentLength[20];
 	sprintf(contentLength,"%i",strlen(data));
@@ -137,22 +161,10 @@ void SendToWebApi(SensorDataClass *sensorData)
 	strcat(headerAndData, "\r\n\r\n");
 	strcat(headerAndData, data);
 	Serial.println(headerAndData);
-
-	//char header3[] PROGMEM = "Accept: application/json\nContent-Type: application/json\nContent-Length: 200 ";
-	//const char header3 = ;
-
-	//const char outData[] = "test";
-	
-	//char header2[200];
-	//strcpy(header2, header);	
-	//ether.httpPost(webApiAddress,webApiHost, header, data, api_callback);
-	//const char *data2 = "test 123";
 	ether.httpPost(webApiAddress,webApiHost, headerAndData, "", api_callback);
-	//ether.browseUrl(webApiAddress, "", webApiHost, "", api_callback);
-
 	delete[] data;
-	//delete[] data2;
-	//delete[] header;
+
+	ethernetStatus = 0;	
 }
 
 
@@ -161,6 +173,7 @@ static void api_callback (byte status, word off, word len) {
   Ethernet::buffer[off+300] = 0;
   char *pResponse = (char*) Ethernet::buffer + off ;
   Serial.println(pResponse); 
+  ethernetStatus = 1;
 }
 
 
