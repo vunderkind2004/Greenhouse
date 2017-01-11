@@ -13,9 +13,9 @@ class SensorDataClass
 {		
   public:	
 	SensorDataClass();
-	SensorDataClass(float h, float t);
-	float HumidityIn;
-	float TemperatureIn;
+	SensorDataClass(const char id, float value);
+	char Id;
+	float Value;
 };
 
 extern SensorDataClass SensorData;

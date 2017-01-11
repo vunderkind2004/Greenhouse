@@ -8,10 +8,10 @@ SensorDataClass::SensorDataClass()
 {
 }
 
-SensorDataClass::SensorDataClass(float h, float t)
+SensorDataClass::SensorDataClass(const char id, float value)
 {
-	HumidityIn = h;
-	TemperatureIn = t;
+	Id = id;
+	Value = value;
 }
 
 SensorDataClass SensorData;
