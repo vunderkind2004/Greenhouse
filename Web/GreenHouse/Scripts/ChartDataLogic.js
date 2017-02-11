@@ -1,7 +1,7 @@
-﻿function LoadChartData (chartId, chartObject, chartData, chartTitle, chartConfig)
+﻿function LoadChartData (chartId, chartData, chartTitle)
 {
     
-    chartConfig =
+    var chartConfig =
     {
         type: 'line',
         data: {
@@ -42,9 +42,11 @@
     
     var ctx = document.getElementById(chartId).getContext("2d");
 
-    chartObject = new Chart(ctx, chartConfig);
+    var chartObject = new Chart(ctx, chartConfig);
+
+    return { chart: chartObject, config: chartConfig };
 }
-function LoadAll(config)
+function LoadAll(callback)
 {
     var baseUrl = "/home/";
     var now = baseUrl + "GetSensorDataNow";
@@ -53,14 +55,21 @@ function LoadAll(config)
     var month = baseUrl + "GetSensorDataMonth";
     var year = baseUrl + "GetSensorDataYear";
 
-    LoadData(now, "Now", window.Now, "Now",config);
-    LoadData(day, "Day", window.Day, "Day");
-    LoadData(week, "Week", window.Week, "Week");
-    LoadData(month, "Month", window.Month, "Month");
-    LoadData(year, "Year", window.Year, "Year");
+    LoadData(now, "Now", "Now", true,callback);
+    LoadData(day, "Day",  "Day");
+    LoadData(week, "Week","Week");
+    LoadData(month, "Month", "Month");
+    LoadData(year, "Year", "Year");
 
 }
-function LoadData(url, chartId, chartObject, title, config)
+function LoadData(url, chartId, title, isNow, callback)
 {
-    $.get(url, function (data) { LoadChartData(chartId, chartObject, data, title, config); }, "json");
+    $.get(url, function(data) {
+        var chartData = LoadChartData(chartId, data, title);
+        if (isNow) {
+            window.Now = chartData.chart;
+            window.NowConfig = chartData.config;
+            callback();
+        }
+    }, "json");
 }

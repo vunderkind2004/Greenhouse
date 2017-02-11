@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using GreenHouse.EfRepository.Repositories;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Repository.DataModel;
@@ -41,7 +42,8 @@ namespace GreenHouse.App_Start
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
-            string connectionString = "Data Source=(local);Initial Catalog=GreenHouseDb;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
+            string connectionString = ConfigurationManager.ConnectionStrings["GreenHouseForOrmLight"].ConnectionString;
+            
             container.RegisterType<IRepository<SensorType>, RepositoryBase<SensorType>>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<Device>, RepositoryBase<Device>>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<SensorData>, RepositoryBase<SensorData>>(new InjectionConstructor(connectionString));

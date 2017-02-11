@@ -51,38 +51,42 @@
             //DrowChart();
         };
 
-        var config = {};
 
-        hub.client.addData = function (data) {
+        window.LoadAll(function() {
 
-            //TODO: implement
-            console.log("add data");
-            for(var i=0; i<data.Timestamps.length;i++)
-            {
-                config.data.labels.shift();
-                config.data.labels.push(data.Timestamps[i]);
+            hub.client.addData = function(data) {
 
-                for(var j=0; j< config.data.datasets.length;j++)
-                {
-                    config.data.datasets[j].data.shift();
-                    var dataSetName = config.data.datasets[j].label;
-                    var newValue = NaN;
-                    for(var k=0; k< data.DataSets.length;k++)
-                    {
-                        var newDataSetName = data.DataSets[k].label;
-                        if(dataSetName===newDataSetName)
-                            newValue = data.DataSets[k].data[i];
+                var config = window.NowConfig;
+
+                //TODO: implement
+                console.log("add data");
+                for (var i = 0; i < data.Timestamps.length; i++) {
+                    config.data.labels.shift();
+                    config.data.labels.push(data.Timestamps[i]);
+
+                    for (var j = 0; j < config.data.datasets.length; j++) {
+                        config.data.datasets[j].data.shift();
+                        var dataSetName = config.data.datasets[j].label;
+                        var newValue = NaN;
+                        for (var k = 0; k < data.DataSets.length; k++) {
+                            var newDataSetName = data.DataSets[k].label;
+                            if (dataSetName === newDataSetName)
+                                newValue = data.DataSets[k].data[i];
+                        }
+                        config.data.datasets[j].data.push(newValue);
+
                     }
-                    config.data.datasets[j].data.push(newValue);     
-                    
                 }
-            }
-            window.Now.update();
-        }
-        $.connection.hub.start().done(function () {           
-            //hub.server.getData(); 
-            //DrowChart();
-            LoadAll(config);
+                window.Now.update();
+            };
+
+            $.connection.hub.start().done(function() {
+
+                //hub.server.getData(); 
+                //DrowChart();
+
+            });
+
         });
 
         function DrowChart (){

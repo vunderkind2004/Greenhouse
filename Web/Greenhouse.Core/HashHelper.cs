@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
-namespace GreenHouse.Helpers
+namespace Greenhouse.Core
 {
     public static class HashHelper
     {

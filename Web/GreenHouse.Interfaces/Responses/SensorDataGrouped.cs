@@ -27,9 +27,9 @@ namespace GreenHouse.Interfaces.Responses
                 else if (Date == null && Month != null)
                     dateTime = dateTime.AddMonths((int)Month - 1);
                 if (Hour != null)
-                    dateTime.AddHours((int)Hour);
+                    dateTime = dateTime.AddHours((int)Hour);
                 if (Minute != null)
-                    dateTime.AddMinutes((int)Minute);
+                    dateTime = dateTime.AddMinutes((int)Minute);
                 return dateTime;
             }
         }

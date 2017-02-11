@@ -15,7 +15,7 @@ namespace FunWithEf
     {
         static void Main(string[] args)
         {
-            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+            //HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
             var repository = new EfSensorDataRepository();
 

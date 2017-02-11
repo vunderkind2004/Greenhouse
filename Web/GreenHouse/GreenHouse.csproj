@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{21846D2D-2D8B-4EBD-9F94-D6F0FA4765F1}</ProjectGuid>
-    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GreenHouse</RootNamespace>
@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -203,7 +204,6 @@
     </Compile>
     <Compile Include="Helpers\ActiveNavHelper.cs" />
     <Compile Include="Helpers\ChartHelper.cs" />
-    <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Hubs\SensorDataHub.cs" />
     <Compile Include="Hubs\SensorDataHubProxy.cs" />
@@ -267,6 +267,10 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Greenhouse.Core\Greenhouse.Core.csproj">
+      <Project>{FD579BC6-6BEB-42DB-9779-2571AE348D62}</Project>
+      <Name>Greenhouse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenHouse.EfRepository\GreenHouse.EfRepository.csproj">
       <Project>{ea50bfde-b41f-493f-8884-6f8337846db7}</Project>
       <Name>GreenHouse.EfRepository</Name>

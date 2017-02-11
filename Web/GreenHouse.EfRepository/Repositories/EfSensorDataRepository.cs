@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Greenhouse.Core;
+using GreenHouse.Interfaces;
 using GreenHouse.Interfaces.ApiModels;
 using GreenHouse.Interfaces.Enums;
 using GreenHouse.Interfaces.Repository;
@@ -56,8 +54,16 @@ namespace GreenHouse.EfRepository.Repositories
             var grouped = GroupSensorDataQuery(data, request.GroupByTime).ToList();
 
             var lables = context.Sensors.Where(x => sensorIds.Contains(x.Id))
-                .Select(x => new { SensorId = x.Id, Lable = x.Device.Name + "_" + x.Name })
-                .ToDictionary(x=>x.SensorId,x=>x.Lable);
+                .Select(x => new
+                {
+                    SensorId = x.Id,
+                    DeviceName = x.Device.Name,
+                    SensorName = x.Name,
+                    Dimension = x.SensorType.Dimension
+                })
+                .ToDictionary(x=>x.SensorId,x=>
+                    NameHelper.GetDataChartLineName(x.DeviceName, x.SensorName, x.Dimension)
+                    );
 
             var response = new GetGroupedSensorDataResponse 
                 { 

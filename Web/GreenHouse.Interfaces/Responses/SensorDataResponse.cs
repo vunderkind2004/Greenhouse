@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GreenHouse.Interfaces.Responses
 {
@@ -16,10 +12,6 @@ namespace GreenHouse.Interfaces.Responses
 
         public string DeviceName { get; set; }
 
-        public string DataSetName { get 
-            {
-                return DeviceName + " " + SensorName + " " + Dimension;
-            }
-        }
+        public string DataSetName => NameHelper.GetDataChartLineName(DeviceName, SensorName, Dimension);
     }
 }

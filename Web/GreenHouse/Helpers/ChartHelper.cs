@@ -18,7 +18,7 @@ namespace GreenHouse.Helpers
 
             foreach (var name in datasetNames)
             {
-                var color = name.ToLower().Contains("temperature") ? "rgba(250, 0, 0,0.4)" : "rgba(0, 0, 200,0.4)";
+                var color = GetColor(name);
                 datasets.Add(name, new GreenHouse.ViewModels.DataSet
                 {
                     Label = name,
@@ -58,7 +58,10 @@ namespace GreenHouse.Helpers
                 .Select(x => new DataSet
                 {
                     Data = x.Select(y => (float?)y.AverageValue).ToArray(),
-                    Label = gropedData.SensorIdLabels[x.Key]                    
+                    Label = gropedData.SensorIdLabels[x.Key] ,
+                    LineColor = GetColor(gropedData.SensorIdLabels[x.Key]),
+                    PointBorderColor = GetColor(gropedData.SensorIdLabels[x.Key])
+
                 }).ToArray();
 
             var model = new SensorDataViewModel
@@ -67,7 +70,13 @@ namespace GreenHouse.Helpers
                 DataSets = dataSets
             };
             return model;
-        }                
-    
+        }
+
+        private static string GetColor(string datasetName)
+        {
+            var color = datasetName.ToLower().Contains("temperature") ? "rgba(250, 0, 0,0.4)" : "rgba(0, 0, 200,0.4)";
+            return color;
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Greenhouse.Core;
 using GreenHouse.Helpers;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Repository.DataModel;

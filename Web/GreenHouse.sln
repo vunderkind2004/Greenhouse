@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse", "GreenHouse\GreenHouse.csproj", "{21846D2D-2D8B-4EBD-9F94-D6F0FA4765F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenHouse.Interfaces", "GreenHouse.Interfaces\GreenHouse.Interfaces.csproj", "{5A2EBA1B-FAE7-41D1-B282-3DDCA3BCABFB}"
@@ -14,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunWithEf", "FunWithEf\FunWithEf.csproj", "{43BB64EC-AFF8-4B56-8F09-489AFCF56BF1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greenhouse.Core", "Greenhouse.Core\Greenhouse.Core.csproj", "{FD579BC6-6BEB-42DB-9779-2571AE348D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PasswordHashGenerator", "PasswordHashGenerator\PasswordHashGenerator.csproj", "{B0C1E061-F250-4131-B64D-C68544AE8BD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSimulator", "DeviceSimulator\DeviceSimulator.csproj", "{77E1EC66-6B30-46A3-B396-BE908E8F31F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,14 @@ Global
 		{FD579BC6-6BEB-42DB-9779-2571AE348D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD579BC6-6BEB-42DB-9779-2571AE348D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD579BC6-6BEB-42DB-9779-2571AE348D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0C1E061-F250-4131-B64D-C68544AE8BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0C1E061-F250-4131-B64D-C68544AE8BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0C1E061-F250-4131-B64D-C68544AE8BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0C1E061-F250-4131-B64D-C68544AE8BD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77E1EC66-6B30-46A3-B396-BE908E8F31F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77E1EC66-6B30-46A3-B396-BE908E8F31F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77E1EC66-6B30-46A3-B396-BE908E8F31F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77E1EC66-6B30-46A3-B396-BE908E8F31F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
