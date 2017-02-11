@@ -35,3 +35,15 @@
 /Web/GreenHouse.EfRepository/obj/Debug
 /Web/PasswordHashGenerator/bin/Debug
 /Web/PasswordHashGenerator/obj/Debug
+/Web/DeviceSimulator/obj/Release
+/Web/FunWithEf/obj/Release
+/Web/GreenHouse/obj/Release
+/Web/Greenhouse.Core/bin/Release
+/Web/Greenhouse.Core/obj/Release
+/Web/GreenHouse.EfRepository/bin/Release
+/Web/GreenHouse.EfRepository/obj/Release
+/Web/GreenHouse.Interfaces/bin/Release
+/Web/GreenHouse.Interfaces/obj/Release
+/Web/GreenHouse.Repository/bin/Release
+/Web/GreenHouse.Repository/obj/Release
+/Web/PasswordHashGenerator/obj/Release

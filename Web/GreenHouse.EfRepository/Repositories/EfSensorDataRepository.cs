@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Greenhouse.Core;
@@ -51,7 +52,12 @@ namespace GreenHouse.EfRepository.Repositories
                 data = data.Where(x => x.time >= Constants.SunSet && x.time < Constants.SunRize);
 
 
-            var grouped = GroupSensorDataQuery(data, request.GroupByTime).ToList();
+            var grouped = GroupSensorDataQuery(data, request.GroupByTime)
+                .ToList();
+
+            var dates = grouped.Select(x => x.EventTime).Distinct().ToList();
+
+            EnrichWithEmptyPoints(grouped, dates, sensorIds);
 
             var lables = context.Sensors.Where(x => sensorIds.Contains(x.Id))
                 .Select(x => new
@@ -67,13 +73,31 @@ namespace GreenHouse.EfRepository.Repositories
 
             var response = new GetGroupedSensorDataResponse 
                 { 
-                    GroupedData = grouped,
+                    GroupedData = grouped.OrderBy(x=>x.EventTime),
                     SensorIdLabels = lables 
                 };
             return response;
              
         }
-        
+
+        private void EnrichWithEmptyPoints(List<SensorDataGrouped> grouped, List<DateTime> dates, int[] sensorIds)
+        {
+            foreach (var dateTime in dates)
+            {
+                foreach (var sensorId in sensorIds)
+                {
+                    if (!grouped.Any(x => x.SensorId == sensorId && x.EventTime == dateTime))
+                    {
+                        grouped.Add(new SensorDataGrouped
+                        {
+                            Date = dateTime,
+                            SensorId = sensorId
+                        });
+                    }
+                }
+            }
+        }
+
         private IQueryable<SensorDataGrouped> GroupSensorDataQuery(IQueryable<SensorDataView> data, GroupByTime groupByTime)
         {
             IQueryable<SensorDataGrouped> grouped = null;

@@ -9,7 +9,7 @@ namespace GreenHouse.Interfaces.Responses
     public class SensorDataGrouped
     {
         public int SensorId { get; set; }
-        public double AverageValue { get; set; }
+        public double? AverageValue { get; set; }
         public DateTime? Date { get; set; }
         public int? Year { get; set; }
         public int? Month { get; set; }            
