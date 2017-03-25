@@ -12,7 +12,7 @@ namespace DeviceSimulator
     class Program
     {
         private static string url = @"http://localhost:2898/api/device/AddGreenhouseData";
-        private static string deviceToken = "0fe4a435-81a4-49f1-b99d-1bcc7a0ca6de";
+        private static string deviceToken = "5c87849c-ec57-4b8b-a000-b87aae1f8209";
 
         private static Timer timer;
 

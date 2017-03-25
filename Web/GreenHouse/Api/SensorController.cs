@@ -16,12 +16,15 @@ namespace GreenHouse.Api
         private readonly IRepository<SensorType> sensorRepository;
         private readonly IRepository<Device> deviceRepository;
         private readonly ISensorDataRepository dataRepository;
+        private readonly  IRepository<Sensor> userSensorRepository;
+
         public SensorController(IRepository<SensorType> sensorRepository, IRepository<Device> deviceRepository,
-            ISensorDataRepository dataRepository)
+            ISensorDataRepository dataRepository, IRepository<Sensor> userSensorRepository)
         {
             this.sensorRepository = sensorRepository;
             this.deviceRepository = deviceRepository;
             this.dataRepository = dataRepository;
+            this.userSensorRepository = userSensorRepository;
         }
 
         [HttpGet]
@@ -29,6 +32,27 @@ namespace GreenHouse.Api
         public IHttpActionResult Test()
         {
             return Ok("Test done");
+        }
+
+        [HttpGet]
+        [Route("")]
+        public IHttpActionResult GetSensors()
+        {
+            var sensors = sensorRepository.GetAll().ToArray();
+            return Ok(sensors);
+        }
+
+        [HttpGet]
+        [Route("userSensors")]
+        public IHttpActionResult GetUserSensors(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return BadRequest("wrong token");
+            var device = deviceRepository.GetAll().FirstOrDefault(x => x.Token == token);
+            if(device==null)
+                return BadRequest("wrong token");
+            var userSensors = userSensorRepository.GetAll().Where(x => x.DeviceId == device.Id);
+            return Ok(userSensors);
         }
 
         [HttpPost]

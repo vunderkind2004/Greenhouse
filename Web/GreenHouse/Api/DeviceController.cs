@@ -9,18 +9,36 @@ using GreenHouse.Hubs;
 using GreenHouse.Interfaces.ApiModels;
 using GreenHouse.Interfaces.Repository;
 using GreenHouse.Repository.DataModel;
+using System.Runtime.Caching;
 
 namespace GreenHouse.Api
 {
     [RoutePrefix("api/device")]
     public class DeviceController : ApiController    
     {
+        private readonly MemoryCache cache;
         private readonly IDeviceDataRepository dataRepository;
+        private readonly int cacheTimeoutMinutes;
+        
         public DeviceController(IDeviceDataRepository dataRepository)
         {
             this.dataRepository = dataRepository;
+            cache = MemoryCache.Default;
+            cacheTimeoutMinutes = 3;
         }
 
+
+        [HttpGet]
+        [Route("LastSensorData")]
+        public IHttpActionResult GetLastSensorData(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return BadRequest("emty token");
+
+            var data = (Interfaces.ApiModels.SensorData[]) cache.Get(token);
+            return Ok(data);
+
+        }
         
         [HttpPost]
         [Route("AddGreenhouseData")]
@@ -48,6 +66,11 @@ namespace GreenHouse.Api
                 var datasets = ChartHelper.GetDataSets(responce.SensorDataResponse);
 
                 SensorDataHubProxy.AddData(responce.UserName, datasets);
+
+                cache.Set(message.DeviceToken, message.SensorsData, 
+                    new CacheItemPolicy {
+                        AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cacheTimeoutMinutes)
+                        });
             }
             catch (Exception ex)
             {

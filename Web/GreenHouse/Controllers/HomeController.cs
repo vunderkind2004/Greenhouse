@@ -13,6 +13,7 @@ using GreenHouse.Repository.DataModel;
 using GreenHouse.Repository.Repository;
 using GreenHouse.ViewModels;
 using Newtonsoft.Json;
+using GreenHouse.Services;
 
 namespace GreenHouse.Controllers
 {
@@ -24,15 +25,17 @@ namespace GreenHouse.Controllers
         private readonly IRepository<Device> deviceRepository;
         private readonly ISensorDataRepository dataReposytory;
         private readonly IRepository<User> userRepository;
+        private readonly DeviceManager deviceManager;
 
         public HomeController(IRepository<SensorType> sensorTypeRepository, IRepository<Device> deviceRepository,
-            ISensorDataRepository dataReposytory, IRepository<User> userRepository, IRepository<Sensor> sensorRepository)
+            ISensorDataRepository dataReposytory, IRepository<User> userRepository, IRepository<Sensor> sensorRepository, DeviceManager deviceManager)
         {
             this.sensorTypeRepository = sensorTypeRepository;
             this.sensorRepository = sensorRepository;
             this.deviceRepository = deviceRepository;
             this.dataReposytory = dataReposytory;
             this.userRepository = userRepository;
+            this.deviceManager = deviceManager;
         }
         //
         // GET: /Home/
@@ -88,7 +91,7 @@ namespace GreenHouse.Controllers
         public ActionResult GetDevices()
         {
             var userId = GetUserId();
-            var devices = GetDevices(userId);
+            var devices = deviceManager.GetDevices(userId);
             return View(devices);
         }
 
@@ -117,7 +120,7 @@ namespace GreenHouse.Controllers
             var userId = GetUserId();
             var model = new SensorViewModel
             {
-                AveableDevices = GetDevices(userId)
+                AveableDevices = deviceManager.GetDevices(userId)
             };
             return View(model);
         }
@@ -131,7 +134,7 @@ namespace GreenHouse.Controllers
             var userId = GetUserId();
             if (device == null || device.UserId != userId)
             {
-                model.AveableDevices = GetDevices(userId);
+                model.AveableDevices = deviceManager.GetDevices(userId);
                 ModelState.AddModelError("DeviceId", "wrong deviceId");
                 return View(model);
             }
@@ -242,11 +245,7 @@ namespace GreenHouse.Controllers
             return user.Id;
         }
 
-        private IEnumerable<DeviceViewModel> GetDevices(int userId)
-        {
-            var devices =  deviceRepository.GetAll().Where(x => x.UserId == userId).Select(x => new DeviceViewModel {Id = x.Id, Name = x.Name, Summary = x.Summary, Token = x.Token });
-            return devices;
-        }
+        
 
     }
 }

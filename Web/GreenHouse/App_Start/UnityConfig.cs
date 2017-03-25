@@ -6,6 +6,7 @@ using GreenHouse.Repository.DataModel;
 using GreenHouse.Repository.Repository;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using GreenHouse.Services;
 
 namespace GreenHouse.App_Start
 {
@@ -50,7 +51,8 @@ namespace GreenHouse.App_Start
             container.RegisterType<IRepository<Sensor>, RepositoryBase<Sensor>>(new InjectionConstructor(connectionString));
             container.RegisterType<ISensorDataRepository, EfSensorDataRepository>();
             container.RegisterType<IDeviceDataRepository, DeviceDataRepository>(new InjectionConstructor(connectionString));
-            container.RegisterType<IRepository<User>, RepositoryBase<User>>(new InjectionConstructor(connectionString));            
+            container.RegisterType<IRepository<User>, RepositoryBase<User>>(new InjectionConstructor(connectionString));
+            container.RegisterInstance(new DeviceManager(container.Resolve<IRepository<Device>>()));
         }
     }
 }

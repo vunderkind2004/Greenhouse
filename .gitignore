@@ -47,3 +47,10 @@
 /Web/GreenHouse.Repository/bin/Release
 /Web/GreenHouse.Repository/obj/Release
 /Web/PasswordHashGenerator/obj/Release
+/Web/GreenhouseApp/GreenhouseApp/bin/Debug
+/Web/GreenhouseApp/GreenhouseApp/obj/Debug
+/Web/GreenhouseApp/GreenhouseApp.Droid/bin/Debug
+/Web/GreenhouseApp/GreenhouseApp.Droid/obj/Debug
+/Web/GreenhouseApp/GreenhouseApp.iOS/obj/iPhone/Debug
+/Web/GreenhouseApp/GreenhouseApp.Windows/obj/Debug
+/Web/PasswordHashGenerator/bin/Release
