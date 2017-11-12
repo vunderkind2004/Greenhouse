@@ -20,7 +20,7 @@ namespace DeviceSimulator
         {
             Console.WriteLine("Device simulation");
 
-            timer = new Timer(GenerateAndSendData,null,0,30*1000);
+            timer = new Timer(GenerateAndSendData,null,0,10*1000);
 
             Console.ReadLine();
 

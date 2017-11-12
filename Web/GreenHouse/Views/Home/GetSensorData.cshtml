@@ -58,7 +58,6 @@
 
                 var config = window.NowConfig;
 
-                //TODO: implement
                 console.log("add data");
                 for (var i = 0; i < data.Timestamps.length; i++) {
                     config.data.labels.shift();
@@ -74,10 +73,9 @@
                                 newValue = data.DataSets[k].data[i];
                         }
                         config.data.datasets[j].data.push(newValue);
-
                     }
                 }
-                window.Now.update();
+                window.Now.update();                
             };
 
             $.connection.hub.start().done(function() {
