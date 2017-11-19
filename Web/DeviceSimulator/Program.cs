@@ -28,13 +28,54 @@ namespace DeviceSimulator
 
         private static void GenerateAndSendData(object state)
         {
+            //var data = GetOleksandrData();
+
+            var data = GetOfficeData();
+
+            var message = JsonConvert.SerializeObject(data);
+            Console.WriteLine("Sending data...");
+            Console.WriteLine(message);
+            SendData(message);
+        }
+
+        private static object GetOfficeData()
+        {
+            var objects = new List<object>();
+            for (var i = 8; i <= 14; i++)
+            {
+                var t = Math.Round( (decimal) (new Random()).Next(2000, 2500) / 100 , 2);
+                objects.Add(new
+                {
+                    SensorId = i,
+                    Value = t
+                });
+                Thread.Sleep(500);
+            }
+
+            var data = new
+            {
+                DeviceToken = "aed33c85-0583-403f-986c-4e8816f3d5f9",
+                SensorsData = objects.ToArray()
+            };
+
+            return data;
+        }
+
+        private static object GetOleksandrData()
+        {
+            var t1 = (new Random()).Next(20, 25);
+            Thread.Sleep(200);
+            var t2 = (new Random()).Next(20, 25);
+            Thread.Sleep(200);
+            var t3 = (new Random()).Next(20, 25);
+
             var data = new
             {
                 DeviceToken = deviceToken,
                 SensorsData = new object[] { new
                         {
                             SensorId = 2,
-                            Value = (new Random()).Next(20,25)
+                            Value = t1
                         },
                         new
                         {
@@ -44,19 +85,21 @@ namespace DeviceSimulator
                         new
                         {
                             SensorId = 4,
-                            Value = (new Random()).Next(20,25)
+                            Value = t2
                         },
                         new
                         {
                             SensorId = 5,
                             Value = (new Random()).Next(740,760)
                         },
+                        new
+                        {
+                            SensorId = 7,
+                            Value = t3
+                        },
                     }
             };
-            var message = JsonConvert.SerializeObject(data);
-            Console.WriteLine("Sending data...");
-            Console.WriteLine(message);
-            SendData(message);
+            return data;
         }
 
         private static void SendData(string message)

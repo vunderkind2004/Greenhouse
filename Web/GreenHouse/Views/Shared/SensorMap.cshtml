@@ -17,9 +17,9 @@
                                 var sensorInfo = Model.SensorMapInfo.SingleOrDefault(x => x.Row == r && x.Column == c);
                                 if (sensorInfo != null)
                                 {
-                                    <div style="min-width:50px; min-height:50px; background-color:steelblue; margin:10px; padding:5px;">
+                                    <div class="sensor-item">
                                         
-                                        <span id="@sensorInfo.Id"
+                                        <span id="@sensorInfo.Id" sensor-type-id="@sensorInfo.TypeId"
                                               data-toggle="tooltip" data-placement="top" 
                                               title="@sensorInfo.DeviceName @sensorInfo.Name">
                                             @sensorInfo.CurrentState

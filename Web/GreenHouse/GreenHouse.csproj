@@ -213,6 +213,7 @@
     <Compile Include="Helpers\ActiveNavHelper.cs" />
     <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
+    <Compile Include="Helpers\RgbHelper.cs" />
     <Compile Include="Hubs\SensorDataHub.cs" />
     <Compile Include="Hubs\SensorDataHubProxy.cs" />
     <Compile Include="Models\SensorLocation.cs" />
@@ -242,6 +243,7 @@
     <Content Include="Content\Img\IoT.png" />
     <Content Include="Content\Styles\bootstrap-theme.min.css" />
     <Content Include="Content\Styles\bootstrap.min.css" />
+    <Content Include="Content\Styles\SensorMap.css" />
     <Content Include="Global.asax" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

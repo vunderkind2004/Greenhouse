@@ -52,10 +52,13 @@ namespace GreenHouse.Controllers
         private SensorMapViewModel GetSensorMap()
         {
             var sensors = GetSensorsViewModel();
+            if (sensors == null || !sensors.Any())
+                return null;
             var sensorInfos = Mapper.Map<IEnumerable<SensorMapInfo>>(sensors);
 
             CalculateCoordinates(sensorInfos);
             SetDimensions(sensorInfos);
+            //CalculateTemperatureColor(sensorInfos);
 
             var sensorMap = new SensorMapViewModel
             {
@@ -66,6 +69,15 @@ namespace GreenHouse.Controllers
 
             return sensorMap;
         }
+
+        //private void CalculateTemperatureColor(IEnumerable<SensorMapInfo> sensorInfos)
+        //{
+        //    var temperatureSensorTypeId = 1;
+        //    var temperatureSensorInfos = sensorInfos.Where(x => x.TypeId == temperatureSensorTypeId);
+        //    var minT = temperatureSensorInfos.Min(x => x.CurrentState);
+        //    var maxT = temperatureSensorInfos.Max(x => x.CurrentState);
+        //    var rgbConverter = new RgbHelper(minT, maxT);
+        //}
 
         private void SetDimensions(IEnumerable<SensorMapInfo> sensorInfos)
         {
