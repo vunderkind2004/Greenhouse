@@ -7,6 +7,7 @@ using GreenHouse.Repository.Repository;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using GreenHouse.Services;
+using GreenHouse.ViewModels;
 
 namespace GreenHouse.App_Start
 {
@@ -53,6 +54,11 @@ namespace GreenHouse.App_Start
             container.RegisterType<IDeviceDataRepository, DeviceDataRepository>(new InjectionConstructor(connectionString));
             container.RegisterType<IRepository<User>, RepositoryBase<User>>(new InjectionConstructor(connectionString));
             container.RegisterInstance(new DeviceManager(container.Resolve<IRepository<Device>>()));
+
+            AutoMapper.Mapper.Initialize(cnf => 
+            {
+                cnf.CreateMap<SensorViewModel, SensorMapInfo>();
+            });            
         }
     }
 }

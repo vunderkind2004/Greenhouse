@@ -14,6 +14,8 @@ using GreenHouse.Repository.Repository;
 using GreenHouse.ViewModels;
 using Newtonsoft.Json;
 using GreenHouse.Services;
+using AutoMapper;
+using GreenHouse.Models;
 
 namespace GreenHouse.Controllers
 {
@@ -42,7 +44,51 @@ namespace GreenHouse.Controllers
 
         public ActionResult Index()
         {
+            var sensorMap1 = GetSensorMap();
+            ViewBag.SensorMap1 = sensorMap1;
             return View();
+        }
+
+        private SensorMapViewModel GetSensorMap()
+        {
+            var sensors = GetSensorsViewModel();
+            var sensorInfos = Mapper.Map<IEnumerable<SensorMapInfo>>(sensors);
+
+            CalculateCoordinates(sensorInfos);
+            SetDimensions(sensorInfos);
+
+            var sensorMap = new SensorMapViewModel
+            {
+                SensorMapInfo = sensorInfos,
+                TotalColumnsCount = sensorInfos.Max(x=>x.Column) + 1,
+                TotalRowsCount = sensorInfos.Max(y => y.Row) + 1,
+            };
+
+            return sensorMap;
+        }
+
+        private void SetDimensions(IEnumerable<SensorMapInfo> sensorInfos)
+        {
+            var sensorTypes = sensorTypeRepository.GetAll();
+            foreach (var sensorInfo in sensorInfos)
+            {
+                sensorInfo.Dimension = sensorTypes
+                    .First(x => x.Id == sensorInfo.TypeId)
+                    .Dimension;
+            }
+        }
+
+        private void CalculateCoordinates(IEnumerable<SensorMapInfo> sensorInfos)
+        {
+            foreach (var sensorInfo in sensorInfos)
+            {                
+                var location = JsonConvert.DeserializeObject<SensorLocation>(sensorInfo.Location);
+                if (location != null)
+                {
+                    sensorInfo.Row = location.Y;
+                    sensorInfo.Column = location.X;
+                }
+            }
         }
 
         [HttpGet]
@@ -97,21 +143,27 @@ namespace GreenHouse.Controllers
 
         public ActionResult GetSensors()
         {
+            var sensors = GetSensorsViewModel();
+            return View(sensors);
+        }
+
+        private IEnumerable<SensorViewModel> GetSensorsViewModel()
+        {
             var userId = GetUserId();
 
             var userDevices = deviceRepository.Select(x => x.UserId == userId).ToList();
-            var userDeviceIds = userDevices.Select(x=>x.Id).ToArray();
-            var sensors = sensorRepository.Select(x=>userDeviceIds.Contains(x.DeviceId))
-                .Select(x => new SensorViewModel 
-                { 
+            var userDeviceIds = userDevices.Select(x => x.Id).ToArray();
+            var sensors = sensorRepository.Select(x => userDeviceIds.Contains(x.DeviceId))
+                .Select(x => new SensorViewModel
+                {
                     Id = x.Id,
-                    Name = x.Name, 
-                    TypeId = x.SensorTypeId, 
-                    DeviceId = x.DeviceId, 
-                    Location = x.Location, 
-                    DeviceName = userDevices.First(d=>d.Id==x.DeviceId).Name 
+                    Name = x.Name,
+                    TypeId = x.SensorTypeId,
+                    DeviceId = x.DeviceId,
+                    Location = x.Location,
+                    DeviceName = userDevices.First(d => d.Id == x.DeviceId).Name
                 }).ToList();
-            return View(sensors);
+            return sensors;
         }
 
         [HttpGet]

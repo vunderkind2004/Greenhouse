@@ -67,10 +67,13 @@ namespace GreenHouse.Api
 
                 SensorDataHubProxy.AddData(responce.UserName, datasets);
 
+                SensorDataHubProxy.SendCurrentSensorValues(responce.UserName, message.SensorsData);
+
                 cache.Set(message.DeviceToken, message.SensorsData, 
                     new CacheItemPolicy {
                         AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cacheTimeoutMinutes)
                         });
+
             }
             catch (Exception ex)
             {

@@ -8,3 +8,9 @@
 <h4 class="text-center">
     This is an project for greenhouse monitoring and control via internet.
 </h4>
+
+<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script src="~/Script/RealTimeDataProvider.js"></script>
+
+@Html.Partial("SensorMap", (GreenHouse.ViewModels.SensorMapViewModel)ViewBag.SensorMap1)

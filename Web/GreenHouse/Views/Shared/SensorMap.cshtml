@@ -1,0 +1,38 @@
+﻿@model  GreenHouse.ViewModels.SensorMapViewModel
+@{
+    Layout = null;
+}
+
+@if (Model!=null && Model.SensorMapInfo != null && Model.SensorMapInfo.Any())
+{
+    <table>
+        @for (var r = 0; r < Model.TotalRowsCount; r++)
+        {
+            <tr>
+                @for (var c = 0; c < Model.TotalColumnsCount; c++)
+                {
+                    <td>
+                        
+                            @{
+                                var sensorInfo = Model.SensorMapInfo.SingleOrDefault(x => x.Row == r && x.Column == c);
+                                if (sensorInfo != null)
+                                {
+                                    <div style="min-width:50px; min-height:50px; background-color:steelblue; margin:10px; padding:5px;">
+                                        
+                                        <span id="@sensorInfo.Id"
+                                              data-toggle="tooltip" data-placement="top" 
+                                              title="@sensorInfo.DeviceName @sensorInfo.Name">
+                                            @sensorInfo.CurrentState
+                                        </span>
+                                        @sensorInfo.Dimension
+                                    </div>
+                                }
+                            }
+                        
+                    </td>
+                }
+
+            </tr>
+        }
+    </table>
+}
