@@ -93,12 +93,21 @@ namespace GreenHouse.Controllers
         private void CalculateCoordinates(IEnumerable<SensorMapInfo> sensorInfos)
         {
             foreach (var sensorInfo in sensorInfos)
-            {                
-                var location = JsonConvert.DeserializeObject<SensorLocation>(sensorInfo.Location);
-                if (location != null)
+            {
+                if (string.IsNullOrEmpty(sensorInfo.Location))
+                    continue;
+                try
                 {
-                    sensorInfo.Row = location.Y;
-                    sensorInfo.Column = location.X;
+                    var location = JsonConvert.DeserializeObject<SensorLocation>(sensorInfo.Location);
+                    if (location != null)
+                    {
+                        sensorInfo.Row = location.Y;
+                        sensorInfo.Column = location.X;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    sensorInfo.Name = ex.Message;
                 }
             }
         }

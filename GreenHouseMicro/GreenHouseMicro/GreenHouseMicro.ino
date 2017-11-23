@@ -1,5 +1,5 @@
 #include <DHT.h>
-#include "SensorData.h"
+#include "SensorDataModel.h"
 #include <EtherCard.h>
 #include "device_config.h"
 
@@ -162,19 +162,19 @@ char *CreateSensorsMessage()
 	message = new char[700];
 	BeginMessageBuild(message);
 
-	SensorDataClass *temperatureIn = GetTemperatureIn();	 	  
+	SensorDataModel *temperatureIn = GetTemperatureIn();	 	  
 	AddSensorData(message,temperatureIn,true);
 	delete temperatureIn;
 
-	SensorDataClass *humidityIn = GetHumidityIn();	 	  
+	SensorDataModel *humidityIn = GetHumidityIn();	 	  
 	AddSensorData(message,humidityIn,false);
 	delete humidityIn;
 
-	SensorDataClass *temperatureOut = GetTemperatureOut();	 	  
+	SensorDataModel *temperatureOut = GetTemperatureOut();	 	  
 	AddSensorData(message,temperatureOut,false);
 	delete temperatureOut;
 
-	SensorDataClass *presureData = GetPresure();	 	  
+	SensorDataModel *presureData = GetPresure();	 	  
 	AddSensorData(message,presureData,false);
 	delete presureData;
 
@@ -223,7 +223,7 @@ void BeginMessageBuild(char *message)
 	strcat(message, "', 'SensorsData':[");
 }
 
-void AddSensorData(char *message, SensorDataClass *sensorData, bool isFirst)
+void AddSensorData(char *message, SensorDataModel *sensorData, bool isFirst)
 {
 	char value[10];
 	String((*sensorData).Value).toCharArray(value,10);
@@ -245,39 +245,39 @@ void EndMessageBuild(char *message)
 
 
 //----------------- Sensors ---------------------------------------------
-SensorDataClass *GetTemperatureIn()
+SensorDataModel *GetTemperatureIn()
 {
     float t = dht.readTemperature();
-	SensorDataClass *data = new SensorDataClass(*temperatureInSensorId,t);
+	SensorDataModel *data = new SensorDataModel(*temperatureInSensorId,t);
 	if(isnan(t))
 		Serial.println("Error reading temperature from DHT");	
 	return data;
 }
 
-SensorDataClass *GetHumidityIn()
+SensorDataModel *GetHumidityIn()
 {
 	float h = dht.readHumidity();
-	SensorDataClass *data = new SensorDataClass(*humidityInSensorId,h);
+	SensorDataModel *data = new SensorDataModel(*humidityInSensorId,h);
 	if(isnan(h))
 		Serial.println("Error reading humidity from DHT");	
 	return data;
 }
 
-SensorDataClass *GetTemperatureOut()
+SensorDataModel *GetTemperatureOut()
 {
 	temperature = bmp085GetTemperature(bmp085ReadUT());
     float t = temperature/10;
-	SensorDataClass *data = new SensorDataClass(*temperatureOutSensorId,t);
+	SensorDataModel *data = new SensorDataModel(*temperatureOutSensorId,t);
 	if(isnan(t))
 		Serial.println("Error reading temperature out from presuremeter");	
 	return data;
 }
 
-SensorDataClass *GetPresure()
+SensorDataModel *GetPresure()
 {
 	pressure = bmp085GetPressure(bmp085ReadUP());
     float p = pressure / 133.322368;
-	SensorDataClass *data = new SensorDataClass(*presureSensorId,p);
+	SensorDataModel *data = new SensorDataModel(*presureSensorId,p);
 	if(isnan(p))
 		Serial.println("Error reading presure");	
 	return data;

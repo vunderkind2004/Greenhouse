@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GreenHouseMicro", "GreenHouseMicro\GreenHouseMicro.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WiFiTest", "WiFiTest\WiFiTest.vcxproj", "{F01A639C-3FC7-4E18-A6BB-38CA90947D31}"
@@ -15,7 +17,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MicroWebServer", "MicroWebS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoTest", "CryptoTest\CryptoTest.csproj", "{4834F392-DB8A-42B7-81D0-E5E0768F0482}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeMcu1_0WiFi", "NodeMcu1_0WiFi\NodeMcu1_0WiFi.vcxproj", "{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoCommon", "ArduinoCommon\ArduinoCommon.vcxitems", "{42C1F6DE-9270-4AE1-9D3A-7A3C0DB2DE0F}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		ArduinoCommon\ArduinoCommon.vcxitems*{42c1f6de-9270-4ae1-9d3a-7a3c0db2de0f}*SharedItemsImports = 9
+		ArduinoCommon\ArduinoCommon.vcxitems*{71db943e-d5e0-4fad-9d86-c5a35ed8a008}*SharedItemsImports = 4
+		ArduinoCommon\ArduinoCommon.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -95,8 +106,21 @@ Global
 		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4834F392-DB8A-42B7-81D0-E5E0768F0482}.Release|Win32.ActiveCfg = Release|Any CPU
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Debug|Win32.ActiveCfg = Debug|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Debug|Win32.Build.0 = Debug|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Any CPU.ActiveCfg = Release|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Win32.ActiveCfg = Release|Win32
+		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF586ABC-A1CD-47B0-AF2F-885A18893191}
 	EndGlobalSection
 EndGlobal

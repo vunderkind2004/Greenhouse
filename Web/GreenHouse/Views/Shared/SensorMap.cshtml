@@ -14,9 +14,11 @@
                     <td>
                         
                             @{
-                                var sensorInfo = Model.SensorMapInfo.SingleOrDefault(x => x.Row == r && x.Column == c);
-                                if (sensorInfo != null)
+                                var sensorInfos = Model.SensorMapInfo.Where(x => x.Row == r && x.Column == c);
+                                foreach (var sensorInfo in sensorInfos)
                                 {
+                                    if (sensorInfo != null)
+                                    {
                                     <div class="sensor-item">
                                         
                                         <span id="@sensorInfo.Id" sensor-type-id="@sensorInfo.TypeId"
@@ -26,9 +28,10 @@
                                         </span>
                                         @sensorInfo.Dimension
                                     </div>
+                                        }
+                                    }
                                 }
-                            }
-                        
+
                     </td>
                 }
 

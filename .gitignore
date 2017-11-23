@@ -61,3 +61,11 @@
 Web/.vs/GreenHouse/v15/sqlite3/storage.ide
 Web/GreenHouse.Database/GreenHouse.Database.jfm
 Web/UpgradeLog.htm
+Debug/
+__vm/
+.vs/
+*.filters
+*.vcxitems
+*.vcxproj
+GreenHouseMicro/NodeMcu1_0WiFi/SensitiveSettings.h
+Web/GreenHouse/Properties/PublishProfiles/FolderProfile.pubxml
