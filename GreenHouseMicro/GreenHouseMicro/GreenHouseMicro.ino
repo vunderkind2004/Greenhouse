@@ -248,7 +248,7 @@ void EndMessageBuild(char *message)
 SensorDataModel *GetTemperatureIn()
 {
     float t = dht.readTemperature();
-	SensorDataModel *data = new SensorDataModel(*temperatureInSensorId,t);
+	SensorDataModel *data = new SensorDataModel(temperatureInSensorId,t);
 	if(isnan(t))
 		Serial.println("Error reading temperature from DHT");	
 	return data;
@@ -257,7 +257,7 @@ SensorDataModel *GetTemperatureIn()
 SensorDataModel *GetHumidityIn()
 {
 	float h = dht.readHumidity();
-	SensorDataModel *data = new SensorDataModel(*humidityInSensorId,h);
+	SensorDataModel *data = new SensorDataModel(humidityInSensorId,h);
 	if(isnan(h))
 		Serial.println("Error reading humidity from DHT");	
 	return data;
@@ -267,7 +267,7 @@ SensorDataModel *GetTemperatureOut()
 {
 	temperature = bmp085GetTemperature(bmp085ReadUT());
     float t = temperature/10;
-	SensorDataModel *data = new SensorDataModel(*temperatureOutSensorId,t);
+	SensorDataModel *data = new SensorDataModel(temperatureOutSensorId,t);
 	if(isnan(t))
 		Serial.println("Error reading temperature out from presuremeter");	
 	return data;
@@ -277,7 +277,7 @@ SensorDataModel *GetPresure()
 {
 	pressure = bmp085GetPressure(bmp085ReadUP());
     float p = pressure / 133.322368;
-	SensorDataModel *data = new SensorDataModel(*presureSensorId,p);
+	SensorDataModel *data = new SensorDataModel(presureSensorId,p);
 	if(isnan(p))
 		Serial.println("Error reading presure");	
 	return data;

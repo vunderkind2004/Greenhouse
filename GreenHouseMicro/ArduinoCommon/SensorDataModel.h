@@ -3,8 +3,8 @@ class SensorDataModel
 {
 	public:
 		SensorDataModel();
-		SensorDataModel(const char id, float value);
-		char Id;
+		SensorDataModel(const char* id, float value);
+		const char* Id;
 		float Value;
 };
 

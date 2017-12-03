@@ -174,7 +174,7 @@ SensorDataModel *GetTemperatureIn()
 {
 	float t = dht.readTemperature();
 	//float t = 20.1 + sent;
-	SensorDataModel *data = new SensorDataModel(*temperatureInSensorId, t);
+	SensorDataModel *data = new SensorDataModel(temperatureInSensorId, t);
 	if (isnan(t))
 		Serial.println("Error reading temperature from DHT");
 	return data;
@@ -184,7 +184,7 @@ SensorDataModel *GetHumidityIn()
 {
 	float h = dht.readHumidity();
 	//float h = 50 + sent;
-	SensorDataModel *data = new SensorDataModel(*humidityInSensorId, h);
+	SensorDataModel *data = new SensorDataModel(humidityInSensorId, h);
 	if (isnan(h))
 		Serial.println("Error reading humidity from DHT");
 	return data;

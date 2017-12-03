@@ -6,7 +6,7 @@ SensorDataModel::SensorDataModel()
 {
 }
 
-SensorDataModel::SensorDataModel(const char id, float value)
+SensorDataModel::SensorDataModel(const char* id, float value)
 {
 	Id = id;
 	Value = value;
