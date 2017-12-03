@@ -61,7 +61,7 @@ $(function () {
             }
         }
 
-        var def = 200;
+        var def = 250;
 
         for (var i=0; i < temperatureSensors.length; i++) {
             if (min && min < max) {
@@ -103,7 +103,7 @@ $(function () {
 
             }
             else {
-                temperatureSensors[i].parentNode.style.backgroundColor = 'rgb(' + 100 + ',' + 100 + ',' + 100 + ')';
+                temperatureSensors[i].parentNode.style.backgroundColor = 'rgb(' + def + ',' + def + ',' + def + ')';
             }
         }
         
