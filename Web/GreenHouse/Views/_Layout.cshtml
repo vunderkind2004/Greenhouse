@@ -15,7 +15,9 @@
         <div class="row">            
             <div class="logo" style="background-color:rgba(11, 184, 182, 0.09)">
                 <img src="../Content/Img/IoT.png" alt="" class="clear" />
-                <span class="h1">Internet of things. Greenhouse.</span>   
+                <span class="h1">Internet of things. @ViewBag.Title</span>   
+                @if (User.Identity.IsAuthenticated)
+                {
                 <div class="pull-right">
                     Welcome 
                     <span class="dropdown">
@@ -26,22 +28,26 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dropdown1">
                             <li>
-                                @Html.ActionLink("Log off","logoff","Account")
+                                @Html.ActionLink("Log off", "logoff", "Account")
                             </li>                            
                         </ul>
                     </span>                    
                 </div> 
+                }
             </div>      
         </div>
         <div>
+@if (User.Identity.IsAuthenticated)
+{
         <ul class="nav nav-tabs nav-justified">            
-            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Home", Action="Index", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
-            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Devices", Action="GetDevices", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
-            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Sensors", Action="GetSensors", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
-            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Sensor types", Action="GetSensorTypes", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})
+            @Html.Partial("NavLink", new GreenHouse.ViewModels.NavLinkViewModel { Name = "Home", Action = "Index", Controller = "Home", RequestUrlPath = Request.Url.AbsolutePath })
+            @Html.Partial("NavLink", new GreenHouse.ViewModels.NavLinkViewModel { Name = "Devices", Action = "GetDevices", Controller = "Home", RequestUrlPath = Request.Url.AbsolutePath })
+            @Html.Partial("NavLink", new GreenHouse.ViewModels.NavLinkViewModel { Name = "Sensors", Action = "GetSensors", Controller = "Home", RequestUrlPath = Request.Url.AbsolutePath })
+            @Html.Partial("NavLink", new GreenHouse.ViewModels.NavLinkViewModel { Name = "Sensor types", Action = "GetSensorTypes", Controller = "Home", RequestUrlPath = Request.Url.AbsolutePath })
             @*@Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="Add sensor type", Action="AddSensorType", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})*@
-            @Html.Partial("NavLink",new GreenHouse.ViewModels.NavLinkViewModel{Name="View data", Action="GetSensorData", Controller="Home", RequestUrlPath = Request.Url.AbsolutePath})            
+            @Html.Partial("NavLink", new GreenHouse.ViewModels.NavLinkViewModel { Name = "View data", Action = "GetSensorData", Controller = "Home", RequestUrlPath = Request.Url.AbsolutePath })            
         </ul>
+}
     </div>
         <div style="margin-top:20px;">
             @RenderBody()

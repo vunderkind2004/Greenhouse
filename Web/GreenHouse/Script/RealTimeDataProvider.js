@@ -1,6 +1,6 @@
 ﻿//signalR
 $(function () {
-    var hub = $.connection.sensorDataHub;
+    var hub = currentHub;
     hub.client.send = function (message) {
         console.log(message);
     }

@@ -59,7 +59,7 @@ namespace GreenHouse.Repository.Repository
 
                 var user = db.Single<User>(x => x.Id == device.UserId);
 
-                return new AddSensorDataResponse { SensorDataResponse = response, UserName = user.Login};
+                return new AddSensorDataResponse { SensorDataResponse = response, UserName = user.Login, DeviceViewId = device.ViewId};
             }
         }
 

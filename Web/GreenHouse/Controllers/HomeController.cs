@@ -44,73 +44,14 @@ namespace GreenHouse.Controllers
 
         public ActionResult Index()
         {
-            var sensorMap1 = GetSensorMap();
+            var sensorTypes = sensorTypeRepository.GetAll();
+            var sensors = GetSensorsViewModel();
+            var sensorMap1 = SensorMapHelper.GetSensorMap(sensors, sensorTypes);
             ViewBag.SensorMap1 = sensorMap1;
             return View();
         }
 
-        private SensorMapViewModel GetSensorMap()
-        {
-            var sensors = GetSensorsViewModel();
-            if (sensors == null || !sensors.Any())
-                return null;
-            var sensorInfos = Mapper.Map<IEnumerable<SensorMapInfo>>(sensors);
-
-            CalculateCoordinates(sensorInfos);
-            SetDimensions(sensorInfos);
-            //CalculateTemperatureColor(sensorInfos);
-
-            var sensorMap = new SensorMapViewModel
-            {
-                SensorMapInfo = sensorInfos,
-                TotalColumnsCount = sensorInfos.Max(x=>x.Column) + 1,
-                TotalRowsCount = sensorInfos.Max(y => y.Row) + 1,
-            };
-
-            return sensorMap;
-        }
-
-        //private void CalculateTemperatureColor(IEnumerable<SensorMapInfo> sensorInfos)
-        //{
-        //    var temperatureSensorTypeId = 1;
-        //    var temperatureSensorInfos = sensorInfos.Where(x => x.TypeId == temperatureSensorTypeId);
-        //    var minT = temperatureSensorInfos.Min(x => x.CurrentState);
-        //    var maxT = temperatureSensorInfos.Max(x => x.CurrentState);
-        //    var rgbConverter = new RgbHelper(minT, maxT);
-        //}
-
-        private void SetDimensions(IEnumerable<SensorMapInfo> sensorInfos)
-        {
-            var sensorTypes = sensorTypeRepository.GetAll();
-            foreach (var sensorInfo in sensorInfos)
-            {
-                sensorInfo.Dimension = sensorTypes
-                    .First(x => x.Id == sensorInfo.TypeId)
-                    .Dimension;
-            }
-        }
-
-        private void CalculateCoordinates(IEnumerable<SensorMapInfo> sensorInfos)
-        {
-            foreach (var sensorInfo in sensorInfos)
-            {
-                if (string.IsNullOrEmpty(sensorInfo.Location))
-                    continue;
-                try
-                {
-                    var location = JsonConvert.DeserializeObject<SensorLocation>(sensorInfo.Location);
-                    if (location != null)
-                    {
-                        sensorInfo.Row = location.Y;
-                        sensorInfo.Column = location.X;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    sensorInfo.Name = ex.Message;
-                }
-            }
-        }
+             
 
         [HttpGet]
         public ActionResult AddSensorType()
@@ -146,6 +87,7 @@ namespace GreenHouse.Controllers
                 Summary = model.Summary,
                 RegistrationDate = DateTime.Now,
                 Token = Guid.NewGuid().ToString(),
+                ViewId = Guid.NewGuid(),
                 UserId = GetUserId()
             };
 

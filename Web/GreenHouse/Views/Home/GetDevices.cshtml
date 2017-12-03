@@ -17,6 +17,7 @@
             <th>Name</th>
             <th>Token</th>
             <th>Summary</th>
+            <th>Public View</th>
         </tr>
     
         @foreach(var item in Model)
@@ -26,6 +27,12 @@
             <td>@item.Name</td>
             <td>@item.Token</td>
             <td>@item.Summary</td>
+            <td>
+            @if (@item.ViewId != null)
+            {
+                @Html.ActionLink("view","Index","Public", new { viewId = item.ViewId },null)
+            }
+            </td>
         </tr>
     
         }

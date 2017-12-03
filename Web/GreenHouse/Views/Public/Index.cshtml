@@ -1,0 +1,45 @@
+﻿@model  GreenHouse.ViewModels.SensorMapViewModel
+@{
+    Layout = "~/Views/_Layout.cshtml";
+    ViewBag.Title = Model==null ? "" :  Model.SensorMapInfo.FirstOrDefault().DeviceName;
+    }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Public sensor data view</title>
+</head>
+<body>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        function sendViewId() {
+            var viewId = $("#viewId").val();
+            currentHub.server.addViewer(viewId);
+        }
+        var currentHub = $.connection.publicHub;
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start().done(function () {
+                    sendViewId();
+                }
+                );
+            }, 5000); // Restart connection after 5 seconds.
+        });
+    </script>
+    <script src="~/Script/RealTimeDataProvider.js"></script>
+    
+
+    <div> 
+        <input hidden="hidden" id="viewId" value="@ViewBag.ViewId" />
+        @Html.Partial("SensorMap", Model)
+    </div>
+    <script>        
+        $.connection.hub.start().done(function () {
+            sendViewId();
+        });   
+    </script>
+</body>
+</html>

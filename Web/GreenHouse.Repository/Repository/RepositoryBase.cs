@@ -93,9 +93,15 @@ namespace GreenHouse.Repository.Repository
             }
         }
 
+        public T Single(Expression<Func<T, bool>> predicate)
+        {
+            var factory = GetFactory();
+            using (var db = factory.Open())
+            {
+                return db.Single<T>(predicate);
+            }
+        }
 
-
-        
 
     }
 }

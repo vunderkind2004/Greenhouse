@@ -65,9 +65,11 @@ namespace GreenHouse.Api
 
                 var datasets = ChartHelper.GetDataSets(responce.SensorDataResponse);
 
-                SensorDataHubProxy.AddData(responce.UserName, datasets);
-
+                SensorDataHubProxy.AddData(responce.UserName, datasets);                
                 SensorDataHubProxy.SendCurrentSensorValues(responce.UserName, message.SensorsData);
+
+                PublicHubProxy.AddData(responce.DeviceViewId, datasets);
+                PublicHubProxy.SendCurrentSensorValues(responce.DeviceViewId, message.SensorsData);
 
                 cache.Set(message.DeviceToken, message.SensorsData, 
                     new CacheItemPolicy {

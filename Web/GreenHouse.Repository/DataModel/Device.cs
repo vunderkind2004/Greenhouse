@@ -13,6 +13,7 @@ namespace GreenHouse.Repository.DataModel
         public string Name { get; set; }
         public string Summary { get; set; }
         public string Token { get; set; }
+        public Guid? ViewId { get; set; }
 
         [References(typeof(User))]
         public int UserId { get; set; }

@@ -10,5 +10,6 @@ namespace GreenHouse.Interfaces.Responses
     {
         public string UserName { get; set; }
         public IEnumerable<SensorDataResponse> SensorDataResponse { get; set; }
+        public Guid? DeviceViewId { get; set; }
     }
 }

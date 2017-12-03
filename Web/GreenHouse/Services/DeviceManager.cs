@@ -19,7 +19,17 @@ namespace GreenHouse.Services
 
         public IEnumerable<DeviceViewModel> GetDevices(int userId)
         {
-            var devices = deviceRepository.GetAll().Where(x => x.UserId == userId).Select(x => new DeviceViewModel { Id = x.Id, Name = x.Name, Summary = x.Summary, Token = x.Token });
+            var devices = deviceRepository
+                .GetAll()
+                .Where(x => x.UserId == userId)
+                .Select(x => new DeviceViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Summary = x.Summary,
+                    Token = x.Token,
+                    ViewId = x.ViewId
+                });
             return devices;
         }
     }

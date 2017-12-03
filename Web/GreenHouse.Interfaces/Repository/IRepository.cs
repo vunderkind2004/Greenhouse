@@ -17,5 +17,6 @@ namespace GreenHouse.Interfaces.Repository
         void Update<T>(T entity);
         void Delete<T>(T entity);
         IQueryable<T> Select(Expression<Func<T, bool>> predicate);
+        T Single(Expression<Func<T, bool>> predicate);
     }
 }

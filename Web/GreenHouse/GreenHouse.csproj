@@ -207,6 +207,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,6 +215,9 @@
     <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\JsonNetResult.cs" />
     <Compile Include="Helpers\RgbHelper.cs" />
+    <Compile Include="Helpers\SensorMapHelper.cs" />
+    <Compile Include="Hubs\PublicHub.cs" />
+    <Compile Include="Hubs\PublicHubProxy.cs" />
     <Compile Include="Hubs\SensorDataHub.cs" />
     <Compile Include="Hubs\SensorDataHubProxy.cs" />
     <Compile Include="Models\SensorLocation.cs" />
@@ -272,6 +276,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\SensorMap.cshtml" />
+    <Content Include="Views\Public\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

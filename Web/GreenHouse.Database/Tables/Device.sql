@@ -6,5 +6,6 @@
     [Summary] NVARCHAR(MAX) NULL, 
     [Token] NVARCHAR(50) NOT NULL, 
     [UserId] INT NOT NULL, 
+    [ViewId] UNIQUEIDENTIFIER NULL, 
     CONSTRAINT [FK_Device_ToUser] FOREIGN KEY ([UserId]) REFERENCES [User]([Id])
 )

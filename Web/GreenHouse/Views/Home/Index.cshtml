@@ -11,6 +11,9 @@
 
 <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
 <script src="~/signalr/hubs"></script>
+<script >
+    var currentHub = $.connection.sensorDataHub;
+</script>
 <script src="~/Script/RealTimeDataProvider.js"></script>
 
 @Html.Partial("SensorMap", (GreenHouse.ViewModels.SensorMapViewModel)ViewBag.SensorMap1)
