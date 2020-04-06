@@ -21,10 +21,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeMcu1_0WiFi", "NodeMcu1_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoCommon", "ArduinoCommon\ArduinoCommon.vcxitems", "{42C1F6DE-9270-4AE1-9D3A-7A3C0DB2DE0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NodeMCU_LCD", "NodeMCU_LCD\NodeMCU_LCD.vcxproj", "{85F94299-18D0-4557-A71D-0361E7A82866}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ArduinoCommon\ArduinoCommon.vcxitems*{42c1f6de-9270-4ae1-9d3a-7a3c0db2de0f}*SharedItemsImports = 9
 		ArduinoCommon\ArduinoCommon.vcxitems*{71db943e-d5e0-4fad-9d86-c5a35ed8a008}*SharedItemsImports = 4
+		ArduinoCommon\ArduinoCommon.vcxitems*{85f94299-18d0-4557-a71d-0361e7a82866}*SharedItemsImports = 4
 		ArduinoCommon\ArduinoCommon.vcxitems*{c5f80730-f44f-4478-bdae-6634efc2ca88}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +119,16 @@ Global
 		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Win32.ActiveCfg = Release|Win32
 		{71DB943E-D5E0-4FAD-9D86-C5A35ED8A008}.Release|Win32.Build.0 = Release|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Debug|Win32.ActiveCfg = Debug|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Debug|Win32.Build.0 = Debug|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Release|Any CPU.ActiveCfg = Release|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Release|Win32.ActiveCfg = Release|Win32
+		{85F94299-18D0-4557-A71D-0361E7A82866}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

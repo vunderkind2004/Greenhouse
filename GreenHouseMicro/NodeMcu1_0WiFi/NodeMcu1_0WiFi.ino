@@ -6,6 +6,7 @@
 #include "SensorDataModel.h"
 #include <DHT.h>
 
+
 // --- sonsor ---
 #define DHTPIN D2     // pin for Data
 //select sensor
@@ -182,7 +183,9 @@ SensorDataModel *GetTemperatureIn()
 
 SensorDataModel *GetHumidityIn()
 {
-	float h = dht.readHumidity();
+	//float h = dht.readHumidity();
+	// temporary humiodity correction for bad sensor
+	float h = dht.readHumidity() - 12;
 	//float h = 50 + sent;
 	SensorDataModel *data = new SensorDataModel(humidityInSensorId, h);
 	if (isnan(h))
