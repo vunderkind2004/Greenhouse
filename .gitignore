@@ -69,3 +69,4 @@ __vm/
 *.vcxproj
 GreenHouseMicro/NodeMcu1_0WiFi/SensitiveSettings.h
 Web/GreenHouse/Properties/PublishProfiles/FolderProfile.pubxml
+/GreenHouseMicro/NodeMCU_LCD/SensitiveSettings.h

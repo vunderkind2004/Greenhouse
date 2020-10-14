@@ -56,6 +56,7 @@ int sent = 0;
 
 float temperature;
 float humidity;
+bool useWiFi = false;
 // ************ #end region: temperature WiFi  *****************
 
 
@@ -197,7 +198,15 @@ int overlaysCount = 1;
 void setup() {
 	Serial.begin(115200);
 	Serial.println("Hello");
-	connectWifi();
+
+	if (useWiFi)
+	{
+		connectWifi();
+	}
+	else
+	{
+		WiFi.mode(WIFI_OFF);
+	}
 
 
 	//ui.setTargetFPS(30);
@@ -251,15 +260,24 @@ void loop() {
 			if (time > lastTime + 1000 * myPeriodic)
 			{
 				lastTime = time;
-				if (WiFi.status() == WL_CONNECTED)
+
+				if (useWiFi)
 				{
-					char *message = CreateSensorsMessage();
-					SendMessage(message);
-					delete message;
+					if (WiFi.status() == WL_CONNECTED)
+					{
+						char *message = CreateSensorsMessage();
+						SendMessage(message);
+						delete message;
+					}
+					else
+					{
+						reconnectWiFi();
+					}
 				}
 				else
 				{
-					reconnectWiFi();
+					char *message = CreateSensorsMessage();					
+					delete message;
 				}
 			}
 
